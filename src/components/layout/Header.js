@@ -14,8 +14,8 @@ export default class header extends Component {
           <Navbar.Brand href="#home">First React Task Manager</Navbar.Brand>
 
           <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#dashboard">Dashboard</Nav.Link>
+            <Nav.Link href="">Home</Nav.Link>
+            <Nav.Link href="/dashboard">Dashboard</Nav.Link>
           </Nav>
 
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import ProjectItem from "./project/ProjectItem";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import CreateProjectButton from "./project/CreateProjectButton";
 
 class Dashboard extends Component {
   render() {
@@ -14,9 +14,7 @@ class Dashboard extends Component {
           </Row>
           <br />
           <Row className="justify-content-md-center">
-            <Button href="ProjectForm.html" className="btn btn-lg btn-info">
-              Create a Project
-            </Button>
+            <CreateProjectButton />
           </Row>
           <br />
           <Row>

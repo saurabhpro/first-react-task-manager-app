@@ -5,6 +5,11 @@
 - https://www.npmjs.com/package/@fortawesome/react-fontawesome#usage
 
 
+class based components
+LifecycleHooks
+
+function based components
+stateless
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
