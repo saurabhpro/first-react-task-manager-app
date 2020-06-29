@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 // get our fontawesome imports
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,20 +21,23 @@ class ProjectItem extends Component {
             <p>Project to create a Kanban Board with Spring Boot and React</p>
           </div>
 
-          <Card style={{ width: "18rem" }}>
-            <Button href="#" variant="outline-primary">
-              <FontAwesomeIcon icon="coffee" />
-              Project Board{" "}
+          <ButtonGroup vertical>
+            <Button href="#" variant="outline-primary" size="lg">
+              <div className="float-left">
+                <FontAwesomeIcon icon="coffee" /> Project Board
+              </div>
             </Button>{" "}
-            <Button href="#" variant="outline-info">
-              <FontAwesomeIcon icon="edit" />
-              Update Project Info
+            <Button href="#" variant="outline-info" size="lg">
+              <div className="float-left">
+                <FontAwesomeIcon icon="edit" /> Update Project Info
+              </div>
             </Button>{" "}
-            <Button href="#" variant="outline-danger">
-              <FontAwesomeIcon icon="minus-cicle" />
-              Delete Project
+            <Button href="#" variant="outline-danger" size="lg">
+              <div className="float-left">
+                <FontAwesomeIcon icon="minus" /> Delete Project
+              </div>
             </Button>{" "}
-          </Card>
+          </ButtonGroup>
         </Row>
       </Container>
     );

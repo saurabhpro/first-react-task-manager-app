@@ -4,6 +4,16 @@ import Dashboard from "./components/Dashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/layout/Header";
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faCheckSquare,
+  faCoffee,
+  faEdit,
+  faMinus,
+} from "@fortawesome/free-solid-svg-icons";
+
+library.add(faCheckSquare, faCoffee, faEdit, faMinus);
+
 function App() {
   return (
     <div className="App">

@@ -21,6 +21,8 @@ class Dashboard extends Component {
           <br />
           <Row>
             <ProjectItem />
+            <br />
+            <ProjectItem />
           </Row>
         </Container>
       </div>

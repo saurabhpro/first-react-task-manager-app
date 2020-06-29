@@ -18,7 +18,7 @@ export default class header extends Component {
             <Nav.Link href="#dashboard">Dashboard</Nav.Link>
           </Nav>
 
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Nav>
             <Form inline>
               <FormControl
@@ -29,7 +29,7 @@ export default class header extends Component {
               <Button variant="outline-light">Search</Button>
             </Form>
 
-            <Navbar.Collapse  className="justify-content-end">
+            <Navbar.Collapse className="justify-content-end">
               <Navbar.Text>
                 Signed in as: <a href="#login">Saurabh Kumar</a>
               </Navbar.Text>

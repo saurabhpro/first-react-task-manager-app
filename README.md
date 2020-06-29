@@ -1,6 +1,10 @@
 
 
-$ npm i --save @fortawesome/fontawesome-svg-core  @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
+- $ npm i --save @fortawesome/fontawesome-svg-core  @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
+- https://react-lite-with-bootstrap.herokuapp.com/components.html#buttons
+- https://www.npmjs.com/package/@fortawesome/react-fontawesome#usage
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
