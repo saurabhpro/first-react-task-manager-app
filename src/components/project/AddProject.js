@@ -108,9 +108,6 @@ class AddProject extends Component {
                 required
                 placeholder="Project Description"
                 name="description"
-                className={classnames({
-                  "is-invalid": errors.description,
-                })}
                 value={this.state.description}
                 onChange={this.onChange}
               />
