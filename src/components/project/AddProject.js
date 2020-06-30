@@ -4,6 +4,10 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { createProject } from "../../actions/projectActions";
+
 class AddProject extends Component {
   constructor() {
     super();
@@ -34,6 +38,8 @@ class AddProject extends Component {
       start_date: this.state.start_date,
       end_date: this.state.end_date,
     };
+
+    this.props.createProject(newProject, this.props.history);
 
     //log for test
     console.log(newProject);
@@ -109,4 +115,16 @@ class AddProject extends Component {
   }
 }
 
-export default AddProject;
+/**
+ * https://reactjs.org/docs/typechecking-with-proptypes.html
+ * Simple means it can checl what argument type we have (since we are using js not ts it might be handy)
+ * React has some built-in typechecking abilities. To run typechecking on the props for a component, you can assign the special propTypes property
+ * More: https://blog.bitsrc.io/understanding-react-proptypes-type-checking-in-react-9648a62ce12e
+ * PropTypes.func.isRequired = The prop must be a function and it must be provided else error will be thrown.
+ */
+AddProject.propTypes = {
+  createProject: PropTypes.func.isRequired,
+};
+
+// https://blog.logrocket.com/react-redux-connect-when-and-how-to-use-it-f2a1edab2013/
+export default connect(null, { createProject })(AddProject);
