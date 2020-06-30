@@ -19,12 +19,12 @@ class AddProject extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChange(event) {
+  onChange = (event) => {
     // this meants get the target name property and set it to the value property
     // then setState
     this.setState({ [event.target.name]: event.target.value });
-  }
-  onSubmit(event) {
+  };
+  onSubmit = (event) => {
     // prevents screen refresh once this event ends
     event.preventDefault();
     const newProject = {
@@ -37,7 +37,7 @@ class AddProject extends Component {
 
     //log for test
     console.log(newProject);
-  }
+  };
 
   render() {
     return (
