@@ -8,6 +8,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProject } from "../../actions/projectActions";
 
+import classnames from "classnames";
+
 class AddProject extends Component {
   constructor() {
     super();
@@ -76,10 +78,15 @@ class AddProject extends Component {
                 as="input"
                 placeholder="Project Name"
                 name="projectName"
+                className={classnames({
+                  "is-invalid": errors.projectName,
+                })}
                 value={this.state.projectName}
                 onChange={this.onChange}
               />
-              <p>{errors.projectName}</p>
+              {errors.projectName && (
+                <div className="invalid-feedback">{errors.projectName}</div>
+              )}
             </Form.Group>
             <Form.Group controlId="formProjectIdentifier">
               <Form.Label>Project Unique Identifier</Form.Label>
@@ -88,10 +95,17 @@ class AddProject extends Component {
                 //disabled
                 placeholder="Project Unique Identifier"
                 name="projectIdentifier"
+                className={classnames({
+                  "is-invalid": errors.projectName,
+                })}
                 value={this.state.projectIdentifier}
                 onChange={this.onChange}
               />
-              <p>{errors.projectIdentifier}</p>
+              {errors.projectIdentifier && (
+                <div className="invalid-feedback">
+                  {errors.projectIdentifier}
+                </div>
+              )}
             </Form.Group>
             <Form.Group controlId="formProjectDescription">
               <Form.Label>Project Description</Form.Label>
@@ -99,9 +113,15 @@ class AddProject extends Component {
                 as="textarea"
                 placeholder="Project Description"
                 name="description"
+                className={classnames({
+                  "is-invalid": errors.description,
+                })}
                 value={this.state.description}
                 onChange={this.onChange}
               />
+              {errors.description && (
+                <div className="invalid-feedback">{errors.description}</div>
+              )}
             </Form.Group>
             <Form.Group controlId="formStartDate">
               <Form.Label>Start Date</Form.Label>
