@@ -28,10 +28,15 @@ class AddProject extends Component {
   }
 
   // Life Cycle Hooks
-  UNSAFE_componentWillReceiveProps = (nextProps) => {
+  // https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
+  // https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html (migration)
+
+  static getDerivedStateFromProps = (nextProps, state) => {
     if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+      state.errors = nextProps.errors;
     }
+
+    return state;
   };
 
   onChange = (event) => {
@@ -79,9 +84,15 @@ class AddProject extends Component {
                 required
                 placeholder="Project Name"
                 name="projectName"
+                className={classnames({
+                  "is-invalid": errors.projectName,
+                })}
                 value={this.state.projectName}
                 onChange={this.onChange}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.projectName}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="formProjectIdentifier">
               <Form.Label>Project Unique Identifier</Form.Label>
@@ -108,9 +119,15 @@ class AddProject extends Component {
                 required
                 placeholder="Project Description"
                 name="description"
+                className={classnames({
+                  "is-invalid": errors.description,
+                })}
                 value={this.state.description}
                 onChange={this.onChange}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.description}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="formStartDate">
               <Form.Label>Start Date</Form.Label>
