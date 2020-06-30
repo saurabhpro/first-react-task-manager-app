@@ -26,7 +26,7 @@ class AddProject extends Component {
   }
 
   // Life Cycle Hooks
-  componentWillReceiveProps = (nextProps) => {
+  UNSAFE_componentWillReceiveProps = (nextProps) => {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
@@ -91,6 +91,7 @@ class AddProject extends Component {
                 value={this.state.projectIdentifier}
                 onChange={this.onChange}
               />
+              <p>{errors.projectIdentifier}</p>
             </Form.Group>
             <Form.Group controlId="formProjectDescription">
               <Form.Label>Project Description</Form.Label>
