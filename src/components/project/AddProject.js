@@ -76,41 +76,36 @@ class AddProject extends Component {
               <Form.Label>Project Name</Form.Label>
               <Form.Control
                 as="input"
+                required
                 placeholder="Project Name"
                 name="projectName"
-                className={classnames({
-                  "is-invalid": errors.projectName,
-                })}
                 value={this.state.projectName}
                 onChange={this.onChange}
               />
-              {errors.projectName && (
-                <div className="invalid-feedback">{errors.projectName}</div>
-              )}
             </Form.Group>
             <Form.Group controlId="formProjectIdentifier">
               <Form.Label>Project Unique Identifier</Form.Label>
               <Form.Control
                 as="input"
+                required
                 //disabled
                 placeholder="Project Unique Identifier"
                 name="projectIdentifier"
                 className={classnames({
-                  "is-invalid": errors.projectName,
+                  "is-invalid": errors.projectIdentifier,
                 })}
                 value={this.state.projectIdentifier}
                 onChange={this.onChange}
               />
-              {errors.projectIdentifier && (
-                <div className="invalid-feedback">
-                  {errors.projectIdentifier}
-                </div>
-              )}
+              <Form.Control.Feedback type="invalid">
+                {errors.projectIdentifier}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="formProjectDescription">
               <Form.Label>Project Description</Form.Label>
               <Form.Control
                 as="textarea"
+                required
                 placeholder="Project Description"
                 name="description"
                 className={classnames({
@@ -119,9 +114,6 @@ class AddProject extends Component {
                 value={this.state.description}
                 onChange={this.onChange}
               />
-              {errors.description && (
-                <div className="invalid-feedback">{errors.description}</div>
-              )}
             </Form.Group>
             <Form.Group controlId="formStartDate">
               <Form.Label>Start Date</Form.Label>
