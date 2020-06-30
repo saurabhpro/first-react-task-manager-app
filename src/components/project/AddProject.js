@@ -17,11 +17,20 @@ class AddProject extends Component {
       description: "",
       start_date: "",
       end_date: "",
+      // add errors to extract on form
+      errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+
+  // Life Cycle Hooks
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  };
 
   onChange = (event) => {
     // this meants get the target name property and set it to the value property
@@ -46,6 +55,11 @@ class AddProject extends Component {
   };
 
   render() {
+    {
+      // restructuring
+    }
+    const { errors } = this.state;
+
     return (
       <Container className="p-2 flex-fill justify-content-center">
         <div className="col-md-8 m-auto">
@@ -65,6 +79,7 @@ class AddProject extends Component {
                 value={this.state.projectName}
                 onChange={this.onChange}
               />
+              <p>{errors.projectName}</p>
             </Form.Group>
             <Form.Group controlId="formProjectIdentifier">
               <Form.Label>Project Unique Identifier</Form.Label>
@@ -124,7 +139,12 @@ class AddProject extends Component {
  */
 AddProject.propTypes = {
   createProject: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+  errors: state.errors,
+});
+
 // https://blog.logrocket.com/react-redux-connect-when-and-how-to-use-it-f2a1edab2013/
-export default connect(null, { createProject })(AddProject);
+export default connect(mapStateToProps, { createProject })(AddProject);
