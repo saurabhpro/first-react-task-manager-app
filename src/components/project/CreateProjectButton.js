@@ -7,7 +7,7 @@ const CreateProjectButton = () => {
   return (
     <React.Fragment>
       <Link to="/addProject">
-        <Button href="ProjectForm.html" className="btn btn-lg btn-info">
+        <Button className="btn btn-lg btn-info">
           Create a Project
         </Button>
       </Link>
