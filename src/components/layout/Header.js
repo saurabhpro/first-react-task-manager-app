@@ -13,28 +13,27 @@ export default class header extends Component {
         <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
           <Navbar.Brand href="#home">First React Task Manager</Navbar.Brand>
 
-          <Nav className="mr-auto">
-            <Nav.Link href="">Home</Nav.Link>
-            <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-          </Nav>
-
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Nav>
-            <Form inline>
-              <FormControl
-                type="text"
-                placeholder="Search"
-                className="mr-sm-2"
-              />
-              <Button variant="outline-light">Search</Button>
-            </Form>
+          <Navbar.Collapse className="justify-content-end">
+            <Nav className="mr-auto">
+              <Nav.Link href="">Home</Nav.Link>
+              <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+            </Nav>
 
-            <Navbar.Collapse className="justify-content-end">
-              <Navbar.Text>
-                Signed in as: <a href="#login">Saurabh Kumar</a>
-              </Navbar.Text>
-            </Navbar.Collapse>
-          </Nav>
+            <Nav>
+              <Form inline>
+                <FormControl
+                  type="text"
+                  placeholder="Search"
+                  className="mr-sm-2 justify-content-end"
+                />
+                <Button variant="outline-light">Search</Button>
+              </Form>
+            </Nav>
+            <Navbar.Text>
+              Signed in as: <a href="#login">Saurabh Kumar</a>
+            </Navbar.Text>
+          </Navbar.Collapse>
         </Navbar>
       </>
     );
