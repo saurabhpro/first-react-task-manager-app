@@ -19,6 +19,12 @@ class Dashboard extends Component {
   }
 
   render() {
+    const projectObject = {
+      projectName: "Project Name PROPS",
+      projectIdentifier: "PROPS",
+      description: "description from PROPS",
+    };
+
     return (
       <div className="projects">
         <Container fluid>
@@ -31,9 +37,10 @@ class Dashboard extends Component {
           </Row>
           <br />
           <Row>
-            <ProjectItem />
-            <br />
-            <ProjectItem />
+            {
+              //this prop name is same as the child extracted name 
+            }
+            <ProjectItem project = {projectObject}/>
           </Row>
         </Container>
       </div>
