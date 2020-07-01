@@ -4,7 +4,20 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import CreateProjectButton from "./project/CreateProjectButton";
 
+import { connect } from "react-redux";
+import { getProjects } from "../actions/projectActions";
+import PropTypes from "prop-types";
+
 class Dashboard extends Component {
+  // Life Cycle Hooks
+  // https://reactjs.org/docs/react-component.html#componentdidmount
+  // is invoked immediately after a component is mounted (inserted into the tree).
+  // Initialization that requires DOM nodes should go here.
+  // If you need to load data from a remote endpoint, this is a good place to instantiate the network request.
+  componentDidMount() {
+    this.props.getProjects();
+  }
+
   render() {
     return (
       <div className="projects">
@@ -28,4 +41,14 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+// typescript type validation
+Dashboard.propTypes = {
+  project: PropTypes.object.isRequired,
+  getProjects: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  project: state.project,
+});
+
+export default connect(mapStateToProps, { getProjects })(Dashboard);

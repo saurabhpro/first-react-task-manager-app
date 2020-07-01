@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_ERRORS } from "./types";
+import { GET_ERRORS, GET_PROJECTS } from "./types";
 
 const baseURL = "http://localhost:8080";
 
@@ -12,9 +12,9 @@ const baseURL = "http://localhost:8080";
 export const createProject = (project, history) => async (dispatch) => {
   try {
     const serverResponse = await axios.post(baseURL + "/api/project", project);
-    console.log(serverResponse);
-    
-     //redirect to this route with props set (visible in redux debug tool)
+    console.debug(serverResponse);
+
+    //redirect to this route with props set (visible in redux debug tool)
     history.push("/dashboard");
   } catch (error) {
     console.error(error);
@@ -23,4 +23,14 @@ export const createProject = (project, history) => async (dispatch) => {
       payload: error.response.data,
     });
   }
+};
+
+export const getProjects = () => async (dispatch) => {
+  const serverResponse = await axios.get(baseURL + "/api/project/all");
+  console.debug(serverResponse);
+
+  dispatch({
+    type: GET_PROJECTS,
+    payload: serverResponse.data,
+  });
 };
