@@ -19,11 +19,8 @@ class Dashboard extends Component {
   }
 
   render() {
-    const projectObject = {
-      projectName: "Project Name PROPS",
-      projectIdentifier: "PROPS",
-      description: "description from PROPS",
-    };
+    // const projectList = this.props.project.projects;
+    const { projects } = this.props.project; // destructuring requires exact matchinh property
 
     return (
       <div className="projects">
@@ -38,9 +35,11 @@ class Dashboard extends Component {
           <br />
           <Row>
             {
-              //this prop name is same as the child extracted name 
+              //this prop name is same as the child extracted name
+              projects.map((proj) => (
+                <ProjectItem key={proj.id} project={proj} />
+              ))
             }
-            <ProjectItem project = {projectObject}/>
           </Row>
         </Container>
       </div>
