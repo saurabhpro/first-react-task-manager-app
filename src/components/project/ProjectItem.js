@@ -7,10 +7,12 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 // get our fontawesome imports
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { Link } from "react-router-dom";
+
 class ProjectItem extends Component {
   render() {
     const { project } = this.props;
-console.log(this.props)
+    console.log(this.props);
     return (
       <Container className="card card-body bg-light mb-3">
         <Row>
@@ -29,11 +31,13 @@ console.log(this.props)
                 <FontAwesomeIcon icon="coffee" /> Project Board
               </div>
             </Button>{" "}
-            <Button href="#" variant="outline-info" size="lg">
-              <div className="float-left">
-                <FontAwesomeIcon icon="edit" /> Update Project Info
-              </div>
-            </Button>{" "}
+            <Link to={`/updateProject/${project.projectIdentifier}`}>
+              <Button variant="outline-info" size="lg">
+                <div className="float-left">
+                  <FontAwesomeIcon icon="edit" /> Update Project Info
+                </div>
+              </Button>{" "}
+            </Link>
             <Button href="#" variant="outline-danger" size="lg">
               <div className="float-left">
                 <FontAwesomeIcon icon="minus" /> Delete Project

@@ -17,6 +17,7 @@ import AddProject from "./components/project/AddProject";
 
 import { Provider } from "react-redux";
 import appStore from "./store";
+import UpdateProject from "./components/update-project/UpdateProject";
 
 library.add(faCheckSquare, faCoffee, faEdit, faMinus);
 
@@ -32,6 +33,7 @@ function App() {
           <Header />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/addProject" component={AddProject} />
+          <Route exact path="/updateProject/:id" component={UpdateProject} />
         </div>
       </Router>
     </Provider>
