@@ -4,7 +4,18 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
+import { getProject } from "../../actions/projectActions";
+
+import PropTypes from "prop-types";
+import classnames from "classnames";
+import { connect } from "react-redux";
+
 class UpdateProject extends Component {
+  componentDidMount() {
+    // destructuring
+    const { id } = this.props.match.params;
+    this.props.getProject(id, this.props.history);
+  }
   render() {
     return (
       <Container className="p-2 flex-fill justify-content-center">
@@ -46,11 +57,11 @@ class UpdateProject extends Component {
             </Form.Group>
             <Form.Group controlId="formStartDate">
               <Form.Label>Start Date</Form.Label>
-              <Form.Control type="date" name="start_date" />
+              <Form.Control type="date" name="startDate" />
             </Form.Group>
             <Form.Group controlId="formEndDate">
               <Form.Label>Estimated End Date</Form.Label>
-              <Form.Control type="date" name="end_date" />
+              <Form.Control type="date" name="endDate" />
             </Form.Group>
             <Button type="submit" block>
               Update
@@ -62,4 +73,14 @@ class UpdateProject extends Component {
   }
 }
 
-export default UpdateProject;
+UpdateProject.propTypes = {
+  getProject: PropTypes.func.isRequired,
+  project: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  // define the variable to be used
+  project: state.project.project,
+});
+
+export default connect(mapStateToProps, { getProject })(UpdateProject);

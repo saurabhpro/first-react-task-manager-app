@@ -51,8 +51,8 @@ class AddProject extends Component {
       projectName: this.state.projectName,
       projectIdentifier: this.state.projectIdentifier,
       description: this.state.description,
-      start_date: this.state.start_date,
-      end_date: this.state.end_date,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
     };
 
     this.props.createProject(newProject, this.props.history);
@@ -62,9 +62,7 @@ class AddProject extends Component {
   };
 
   render() {
-    {
-      // restructuring
-    }
+   
     const { errors } = this.state;
 
     return (
@@ -133,8 +131,8 @@ class AddProject extends Component {
               <Form.Label>Start Date</Form.Label>
               <Form.Control
                 type="date"
-                name="start_date"
-                value={this.state.start_date}
+                name="startDate"
+                value={this.state.startDate}
                 onChange={this.onChange}
               />
             </Form.Group>
@@ -142,8 +140,8 @@ class AddProject extends Component {
               <Form.Label>Estimated End Date</Form.Label>
               <Form.Control
                 type="date"
-                name="end_date"
-                value={this.state.end_date}
+                name="endDate"
+                value={this.state.endDate}
                 onChange={this.onChange}
               />
             </Form.Group>
