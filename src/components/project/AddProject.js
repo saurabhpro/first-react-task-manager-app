@@ -17,8 +17,8 @@ class AddProject extends Component {
       projectName: "",
       projectIdentifier: "",
       description: "",
-      start_date: "",
-      end_date: "",
+      startDate: "",
+      endDate: "",
       // add errors to extract on form
       errors: {},
     };
@@ -62,7 +62,6 @@ class AddProject extends Component {
   };
 
   render() {
-   
     const { errors } = this.state;
 
     return (

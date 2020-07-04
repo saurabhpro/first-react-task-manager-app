@@ -3,6 +3,12 @@
 - $ npm i --save @fortawesome/fontawesome-svg-core  @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
 - https://react-lite-with-bootstrap.herokuapp.com/components.html#buttons
 - https://www.npmjs.com/package/@fortawesome/react-fontawesome#usage
+- https://react-bootstrap.github.io/components/buttons/
+- https://ej2.syncfusion.com/react/documentation/button/how-to/add-link-to-a-button/#:~:text=React-,Add%20link%20to%20a%20Button%20in%20React%20Button%20component,open()%20method.
+- https://medium.com/jsessentials/how-to-create-a-reusable-form-with-react-bootstrap-ccc8bd9ba0e3
+- https://mdbootstrap.com/docs/react/utilities/flexbox/#docsTabsOverview
+- https://jaredpalmer.com/formik/docs/overview
+- 
 
 ```js
  <Form.Group

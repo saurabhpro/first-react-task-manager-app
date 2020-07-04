@@ -16,7 +16,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import AddProject from "./components/project/AddProject";
 
 import { Provider } from "react-redux";
-import appStore from "./store";
+import appStore from "./store/store";
 import UpdateProject from "./components/update-project/UpdateProject";
 
 library.add(faCheckSquare, faCoffee, faEdit, faMinus);
