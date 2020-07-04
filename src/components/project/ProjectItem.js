@@ -9,7 +9,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Link } from "react-router-dom";
 
+import PropTypes from "prop-types";
+
+import { connect } from "react-redux";
+import { deleteProject } from "../../actions/projectActions";
+
 class ProjectItem extends Component {
+  onDeleteClick = (id) => {
+    this.props.deleteProject(id);
+  };
+
   render() {
     const { project } = this.props;
     console.log(this.props);
@@ -38,13 +47,15 @@ class ProjectItem extends Component {
                 </div>
               </Button>{" "}
             </Link>
-            <Link to={`/deleteProject/${project.projectIdentifier}`}>
-              <Button variant="outline-danger" size="lg">
-                <div className="float-left">
-                  <FontAwesomeIcon icon="minus" /> Delete Project
-                </div>
-              </Button>{" "}
-            </Link>
+            <Button
+              variant="outline-danger"
+              size="lg"
+              onClick={this.onDeleteClick.bind(this, project.projectIdentifier)}
+            >
+              <div className="float-left">
+                <FontAwesomeIcon icon="minus" /> Delete Project
+              </div>
+            </Button>{" "}
           </ButtonGroup>
         </Row>
       </Container>
@@ -52,4 +63,8 @@ class ProjectItem extends Component {
   }
 }
 
-export default ProjectItem;
+ProjectItem.propTypes = {
+  deleteProject: PropTypes.func.isRequired,
+};
+
+export default connect(null, { deleteProject })(ProjectItem);

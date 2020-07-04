@@ -24,8 +24,7 @@ DeleteProject.propTypes = {
 //https://react-redux.js.org/using-react-redux/connect-mapstate
 const mapStateToProps = (state) => ({
   // define the variable to be used
-  project: state.project.project,
-  errors: state.errors,
+  project: state.project.project
 });
 
 export default connect(mapStateToProps, { deleteProject })(DeleteProject);
