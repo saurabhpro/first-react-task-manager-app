@@ -123,7 +123,7 @@ class UpdateProject extends Component {
                 onChange={this.onChange}
               />
               <Form.Control.Feedback type="invalid">
-                {errors.projectName} wrong
+                {errors.projectName}
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="formProjectIdentifier">

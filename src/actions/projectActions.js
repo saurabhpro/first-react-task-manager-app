@@ -16,6 +16,12 @@ export const createProject = (project, history) => async (dispatch) => {
 
     //redirect to this route with props set (visible in redux debug tool)
     history.push("/dashboard");
+
+    //clear out any previous errors from state
+    dispatch({
+      type: GET_ERRORS,
+      payload: {},
+    });
   } catch (error) {
     console.error(error);
     dispatch({
