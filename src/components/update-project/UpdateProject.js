@@ -11,27 +11,6 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 
 class UpdateProject extends Component {
-
-  // static getDerivedStateFromProps = (nextProps, state) => {
-  //   if (nextProps.errors) {
-  //     state.errors = nextProps.errors;
-  //   }
-
-  //   if (nextProps.projectName) {
-  //     state.project.projectName= nextProps.projectName;
-  //   }
-  //   if (nextProps.description) {
-  //     state.project.description= nextProps.description;
-  //   }
-  //   if (nextProps.startDate) {
-  //     state.project.startDate= nextProps.startDate;
-  //   }
-  //   if (nextProps.endDate) {
-  //     state.project.endDate= nextProps.endDate;
-  //   }
-  //   return state;
-  // };
-  
   // to make it controlled componenet we create a constructor
   constructor(props) {
     super(props);
@@ -44,32 +23,16 @@ class UpdateProject extends Component {
       endDate: "",
 
       //error handling
-      errors: [],
+      errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   // Life Cycle Hooks
   // https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
   // https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html (migration)
-
-  //   static getDerivedStateFromProps = (nextProps, state) => {
-  //     console.log(nextProps);
-  //     state = {
-  //       id: nextProps.project.id,
-  //       projectName: nextProps.project.projectName,
-  //       projectIdentifier: nextProps.project.projectIdentifier,
-  //       description: nextProps.project.description,
-  //       startDate: nextProps.project.startDate,
-  //       endDate:
-  //         nextProps.project.endDate != null ? nextProps.project.endDate : "",
-  //     };
-
-  //     return state;
-  //   };
-
   UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       id,
@@ -79,6 +42,10 @@ class UpdateProject extends Component {
       startDate,
       endDate,
     } = nextProps.project;
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
 
     this.setState({
       id,
@@ -123,7 +90,14 @@ class UpdateProject extends Component {
   };
 
   render() {
-    const { errors } = this.state;
+    const {
+      errors,
+      projectName,
+      projectIdentifier,
+      description,
+      startDate,
+      endDate,
+    } = this.state;
 
     return (
       <Container className="p-2 flex-fill justify-content-center">
@@ -145,11 +119,11 @@ class UpdateProject extends Component {
                 className={classnames({
                   "is-invalid": errors.projectName,
                 })}
-                value={this.state.projectName}
+                value={projectName}
                 onChange={this.onChange}
               />
               <Form.Control.Feedback type="invalid">
-                {errors.projectName}
+                {errors.projectName} wrong
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="formProjectIdentifier">
@@ -160,7 +134,7 @@ class UpdateProject extends Component {
                 disabled
                 placeholder="Project Unique Identifier"
                 name="projectIdentifier"
-                value={this.state.projectIdentifier}
+                value={projectIdentifier}
                 onChange={this.onChange}
               />
             </Form.Group>
@@ -174,7 +148,7 @@ class UpdateProject extends Component {
                 className={classnames({
                   "is-invalid": errors.description,
                 })}
-                value={this.state.description}
+                value={description}
                 onChange={this.onChange}
               />
               <Form.Control.Feedback type="invalid">
@@ -186,7 +160,7 @@ class UpdateProject extends Component {
               <Form.Control
                 type="date"
                 name="startDate"
-                value={this.state.startDate}
+                value={startDate}
                 onChange={this.onChange}
               />
             </Form.Group>
@@ -195,7 +169,7 @@ class UpdateProject extends Component {
               <Form.Control
                 type="date"
                 name="endDate"
-                value={this.state.endDate}
+                value={endDate}
                 onChange={this.onChange}
               />
             </Form.Group>
@@ -213,12 +187,14 @@ UpdateProject.propTypes = {
   getProject: PropTypes.func.isRequired,
   createProject: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
 //https://react-redux.js.org/using-react-redux/connect-mapstate
 const mapStateToProps = (state) => ({
   // define the variable to be used
   project: state.project.project,
+  errors: state.errors,
 });
 
 export default connect(mapStateToProps, { getProject, createProject })(

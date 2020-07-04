@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_ERRORS, GET_PROJECTS , GET_PROJECT} from "./types";
+import { GET_ERRORS, GET_PROJECTS, GET_PROJECT } from "./types";
 
 const baseURL = "http://localhost:8080";
 
@@ -35,13 +35,16 @@ export const getProjects = () => async (dispatch) => {
   });
 };
 
-export const getProject = (id, history) => async (dispatch)=> {
-  const serverResponse = await axios.get(baseURL+`/api/project/${id}`)
+export const getProject = (id, history) => async (dispatch) => {
+  try {
+    const serverResponse = await axios.get(baseURL + `/api/project/${id}`);
+    console.debug(serverResponse);
 
-  console.debug(serverResponse)
-
-  dispatch({
-    type: GET_PROJECT,
-    payload: serverResponse.data
-  })
-}
+    dispatch({
+      type: GET_PROJECT,
+      payload: serverResponse.data,
+    });
+  } catch (error) {
+    history.push("/dashboard");
+  }
+};
