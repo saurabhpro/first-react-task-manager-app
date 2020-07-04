@@ -12,12 +12,13 @@ import {
   faMinus,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AddProject from "./components/project/AddProject";
 
 import { Provider } from "react-redux";
 import appStore from "./store/store";
-import  UpdateProject  from "./components/project/UpdateProject";
+import UpdateProject from "./components/project/UpdateProject";
+import NotFoundPage from "./components/not-found/NotFoundPage";
 
 library.add(faCheckSquare, faCoffee, faEdit, faMinus);
 
@@ -31,9 +32,13 @@ function App() {
         <div className="App">
           <h1>Welcome to Saurabh's First React App</h1>
           <Header />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/addProject" component={AddProject} />
-          <Route exact path="/updateProject/:id" component={UpdateProject} />
+          <Switch>
+            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/addProject" component={AddProject} />
+            <Route exact path="/updateProject/:id" component={UpdateProject} />
+            <Route path="*" component={NotFoundPage} />
+          </Switch>
         </div>
       </Router>
     </Provider>
