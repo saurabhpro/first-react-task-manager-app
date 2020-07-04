@@ -19,6 +19,7 @@ import { Provider } from "react-redux";
 import appStore from "./store/store";
 import UpdateProject from "./components/project/UpdateProject";
 import NotFoundPage from "./components/not-found/NotFoundPage";
+import ProjectBoard from "./components/project-board/ProjectBoard";
 
 library.add(faCheckSquare, faCoffee, faEdit, faMinus);
 
@@ -37,6 +38,7 @@ function App() {
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/addProject" component={AddProject} />
             <Route exact path="/updateProject/:id" component={UpdateProject} />
+            <Route exact path="/projectBoard/:id" component={ProjectBoard} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </div>

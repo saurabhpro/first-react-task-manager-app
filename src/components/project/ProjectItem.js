@@ -35,27 +35,29 @@ class ProjectItem extends Component {
           </div>
 
           <ButtonGroup vertical>
-            <Button href="#" variant="outline-primary" size="lg">
-              <div className="float-left">
-                <FontAwesomeIcon icon="coffee" /> Project Board
-              </div>
-            </Button>{" "}
+            <Link to={`/projectBoard/${project.projectIdentifier}`}>
+              <Button variant="outline-primary" block>
+                <div className="float-left">
+                  <FontAwesomeIcon icon="coffee" /> Project Board
+                </div>
+              </Button>
+            </Link>
             <Link to={`/updateProject/${project.projectIdentifier}`}>
-              <Button variant="outline-info" size="lg">
+              <Button variant="outline-info" block>
                 <div className="float-left">
                   <FontAwesomeIcon icon="edit" /> Update Project Info
                 </div>
-              </Button>{" "}
+              </Button>
             </Link>
             <Button
               variant="outline-danger"
-              size="lg"
+              block
               onClick={this.onDeleteClick.bind(this, project.projectIdentifier)}
             >
               <div className="float-left">
                 <FontAwesomeIcon icon="minus" /> Delete Project
               </div>
-            </Button>{" "}
+            </Button>
           </ButtonGroup>
         </Row>
       </Container>
