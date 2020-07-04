@@ -38,11 +38,13 @@ class ProjectItem extends Component {
                 </div>
               </Button>{" "}
             </Link>
-            <Button href="#" variant="outline-danger" size="lg">
-              <div className="float-left">
-                <FontAwesomeIcon icon="minus" /> Delete Project
-              </div>
-            </Button>{" "}
+            <Link to={`/deleteProject/${project.projectIdentifier}`}>
+              <Button variant="outline-danger" size="lg">
+                <div className="float-left">
+                  <FontAwesomeIcon icon="minus" /> Delete Project
+                </div>
+              </Button>{" "}
+            </Link>
           </ButtonGroup>
         </Row>
       </Container>

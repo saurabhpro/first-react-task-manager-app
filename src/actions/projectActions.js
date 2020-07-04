@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_ERRORS, GET_PROJECTS, GET_PROJECT } from "./types";
+import { GET_ERRORS, GET_PROJECTS, GET_PROJECT, DELETE_PROJECT } from "./types";
 
 const baseURL = "http://localhost:8080";
 
@@ -50,6 +50,21 @@ export const getProject = (id, history) => async (dispatch) => {
       type: GET_PROJECT,
       payload: serverResponse.data,
     });
+  } catch (error) {
+    history.push("/dashboard");
+  }
+};
+
+export const deleteProject = (id, history) => async (dispatch) => {
+  try {
+    await axios.delete(baseURL + `/api/project/${id}`);
+    //history.push("/dashboard");
+    
+    dispatch({
+      type: DELETE_PROJECT,
+      payload: id,
+    });
+  
   } catch (error) {
     history.push("/dashboard");
   }
