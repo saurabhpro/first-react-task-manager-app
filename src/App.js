@@ -31,7 +31,9 @@ function App() {
       }
       <Router>
         <div className="App">
-          <h1>Welcome to Saurabh's First React App</h1>
+          {
+            //<h1>Welcome to Saurabh's First React App</h1>
+          } 
           <Header />
           <Switch>
             <Route exact path="/" component={Dashboard} />
