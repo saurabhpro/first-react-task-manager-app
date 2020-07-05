@@ -20,6 +20,7 @@ class ProjectBoard extends Component {
 
   render() {
     const { id } = this.props.match.params;
+    const { projectTasks } = this.props.backlog;
 
     return (
       <Container fluid className="justify-content-md-center">
@@ -30,7 +31,7 @@ class ProjectBoard extends Component {
           </Button>
         </Link>
         <hr />
-        <Backlog />
+        <Backlog projectTasksProp={projectTasks} />
       </Container>
     );
   }

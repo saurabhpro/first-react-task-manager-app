@@ -7,11 +7,15 @@ import ProjectTask from "../project-board/project-task/ProjectTask";
 
 class Backlog extends Component {
   render() {
+    const { projectTasksProp } = this.props;
+    const tasks = projectTasksProp.map((projectTask) => (
+      <ProjectTask key={projectTask.id} projectTask={projectTask} />
+    ));
     return (
       <CardDeck>
         <Card bg="secondary" text="white" className="mb-2 text-center p-2">
           <Card.Header as="h5">TO DO</Card.Header>
-          <ProjectTask />
+          {tasks}
         </Card>
 
         <Card
@@ -21,7 +25,6 @@ class Backlog extends Component {
           className="mb-2 text-center p-2"
         >
           <Card.Header as="h5">In Progress</Card.Header>
-          <ProjectTask />
         </Card>
 
         <Card
@@ -31,8 +34,6 @@ class Backlog extends Component {
           className="mb-2 text-center p-2"
         >
           <Card.Header as="h5">Done</Card.Header>
-
-          <ProjectTask />
         </Card>
       </CardDeck>
     );
