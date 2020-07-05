@@ -10,32 +10,10 @@ class Backlog extends Component {
     //must have the same name as passed property in ProjectBoard
     const { projectTasksProp } = this.props;
 
-    // now prepare and embeddeble object
-    const tasks = projectTasksProp.map((projectTask) => (
-      <ProjectTask key={projectTask.id} projectTask={projectTask} />
-    ));
-
     // group tasks into three decks
-    let toDoItems = [];
-    let inProgressItems = [];
-    let doneItems = [];
-
-    tasks.forEach((task) => {
-      switch (task.props.projectTask.status) {
-        case "TO_DO":
-          toDoItems.push(task);
-          break;
-        case "IN_PROGRESS":
-          inProgressItems.push(task);
-          break;
-        case "DONE":
-          doneItems.push(task);
-          break;
-        default:
-          console.error("Unknown Card Deck : " + task.props.projectTask.status);
-          break;
-      }
-    });
+    let { toDoItems, inProgressItems, doneItems } = this.distributeToCardDecks(
+      projectTasksProp
+    );
 
     return (
       <CardDeck>
@@ -67,6 +45,35 @@ class Backlog extends Component {
       </CardDeck>
     );
   }
+
+  distributeToCardDecks = (projectTasksProp) => {
+    // now prepare and embeddeble object
+    const tasks = projectTasksProp.map((projectTask) => (
+      <ProjectTask key={projectTask.id} projectTask={projectTask} />
+    ));
+
+    let toDoItems = [];
+    let inProgressItems = [];
+    let doneItems = [];
+
+    tasks.forEach((task) => {
+      switch (task.props.projectTask.status) {
+        case "TO_DO":
+          toDoItems.push(task);
+          break;
+        case "IN_PROGRESS":
+          inProgressItems.push(task);
+          break;
+        case "DONE":
+          doneItems.push(task);
+          break;
+        default:
+          console.error("Unknown Card Deck : " + task.props.projectTask.status);
+          break;
+      }
+    });
+    return { toDoItems, inProgressItems, doneItems };
+  };
 }
 
 export default Backlog;

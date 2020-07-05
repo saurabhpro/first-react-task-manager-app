@@ -11,13 +11,20 @@ import moment from "moment";
 class ProjectTask extends Component {
   render() {
     const { projectTask } = this.props;
+    //using moment.js
     const createdAt = moment(projectTask).format("MMMM Do YYYY");
+
+    // using dynamic colorization and convert to String value
+    let {
+      priorityColorClass,
+      priorityAsString,
+    } = this.getPriorityColorAndStringValue(projectTask);
 
     return (
       <div className="row-sm-3">
         <Card text="dark" className="mb-2 mh-20">
-          <Card.Header className="text-primary">
-            ID: {projectTask.projectSequence} & Priority: {projectTask.priority}
+          <Card.Header className={`${priorityColorClass}`}>
+            ID: {projectTask.projectSequence} | Priority: {priorityAsString}
           </Card.Header>
           <Card.Body>
             <Card.Title>{projectTask.summary}</Card.Title>
@@ -42,6 +49,28 @@ class ProjectTask extends Component {
       </div>
     );
   }
+
+  getPriorityColorAndStringValue = (projectTask) => {
+    let priorityAsString;
+    let priorityColorClass;
+    switch (projectTask.priority) {
+      case 1:
+        priorityAsString = "HIGH";
+        priorityColorClass = "bg-danger text-light";
+        break;
+      case 2:
+        priorityAsString = "MEDIUM";
+        priorityColorClass = "bg-primary text-light";
+        break;
+      case 3:
+        priorityAsString = "LOW";
+        priorityColorClass = "bg-secondary text-light";
+        break;
+      default:
+        break;
+    }
+    return { priorityColorClass, priorityAsString };
+  };
 }
 
 export default ProjectTask;
