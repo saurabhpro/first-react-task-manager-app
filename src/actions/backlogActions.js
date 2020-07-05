@@ -47,7 +47,13 @@ export const getBacklog = (backlogId) => async (dispatch) => {
       type: GET_BACKLOG,
       payload: serverResponse.data,
     });
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+    dispatch({
+      type: GET_ERRORS,
+      payload: error.response.data,
+    });
+  }
 };
 
 export const getProjectTask = (backlogId, projectTaskId, history) => async (
@@ -64,6 +70,10 @@ export const getProjectTask = (backlogId, projectTaskId, history) => async (
       payload: serverResponse.data,
     });
   } catch (error) {
-    //history.push("/error");
+    console.error(error);
+    dispatch({
+      type: GET_ERRORS,
+      payload: error.response.data,
+    });
   }
 };
