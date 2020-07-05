@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 
@@ -34,31 +35,39 @@ class ProjectItem extends Component {
             <p>{project.description}</p>
           </div>
 
-          <ButtonGroup vertical>
-            <Link to={`/projectBoard/${project.projectIdentifier}`}>
-              <Button variant="outline-primary" block>
+          <Card>
+            <ButtonGroup vertical>
+              <Link
+                to={`/projectBoard/${project.projectIdentifier}`}
+                className="btn-block"
+              >
+                <Button variant="outline-primary" block>
+                  <div className="float-left">
+                    <FontAwesomeIcon icon="tasks" /> Project Board
+                  </div>
+                </Button>
+              </Link>
+              <Link to={`/updateProject/${project.projectIdentifier}`}>
+                <Button variant="outline-info" block>
+                  <div className="float-left">
+                    <FontAwesomeIcon icon="edit" /> Update Project Info
+                  </div>
+                </Button>
+              </Link>
+              <Button
+                variant="outline-danger"
+                block
+                onClick={this.onDeleteClick.bind(
+                  this,
+                  project.projectIdentifier
+                )}
+              >
                 <div className="float-left">
-                  <FontAwesomeIcon icon="tasks" /> Project Board
+                  <FontAwesomeIcon icon="minus-square" /> Delete Project
                 </div>
               </Button>
-            </Link>
-            <Link to={`/updateProject/${project.projectIdentifier}`}>
-              <Button variant="outline-info" block>
-                <div className="float-left">
-                  <FontAwesomeIcon icon="edit" /> Update Project Info
-                </div>
-              </Button>
-            </Link>
-            <Button
-              variant="outline-danger"
-              block
-              onClick={this.onDeleteClick.bind(this, project.projectIdentifier)}
-            >
-              <div className="float-left">
-                <FontAwesomeIcon icon="minus" /> Delete Project
-              </div>
-            </Button>
-          </ButtonGroup>
+            </ButtonGroup>
+          </Card>
         </Row>
       </Container>
     );

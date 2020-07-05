@@ -5,6 +5,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 class AddProjectTask extends Component {
   constructor(props) {
     super(props);
@@ -19,13 +21,13 @@ class AddProjectTask extends Component {
     return (
       <Container fluid className="p-2 flex-fill justify-content-center">
         <div className="col-md-8 m-auto">
-          <Link to={`/projectBoard/${id}` } className="mb-3">
-            <Button variant="dark" className="float-left">
-              Back to Project Board
+          <Link to={`/projectBoard/${id}`} className="mb-3">
+            <Button variant="dark" className="float-left" size="sm">
+              <FontAwesomeIcon icon="backward" /> Back to Project Board
             </Button>
           </Link>
-          <br/>
-          <hr/>
+          <br />
+          <hr />
           <h4 className="display-4 text-center">Add Project Task</h4>
           <p className="lead text-center">Project Name + Project Code</p>
           <Form onSubmit={this.onSubmit} className="d-flex-fill p-1 text-left">

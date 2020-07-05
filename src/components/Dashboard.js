@@ -23,26 +23,24 @@ class Dashboard extends Component {
     const { projects } = this.props.project; // destructuring requires exact matchinh property
 
     return (
-      <div className="projects">
-        <Container fluid>
-          <Row className="justify-content-md-center">
-            <h1 className="display-4">Projects</h1>
-          </Row>
-          <br />
-          <Row className="justify-content-md-center">
-            <CreateProjectButton />
-          </Row>
-          <br />
-          <Row>
-            {
-              //this prop name is same as the child extracted name
-              projects.map((proj) => (
-                <ProjectItem key={proj.id} project={proj} />
-              ))
-            }
-          </Row>
-        </Container>
-      </div>
+      <Container fluid className="p-2 flex-fill justify-content-center">
+        <Row className="justify-content-md-center">
+          <h1 className="display-4">Projects</h1>
+        </Row>
+        <br />
+        <Row className="justify-content-md-center">
+          <CreateProjectButton />
+        </Row>
+        <hr />
+        <Row>
+          {
+            //this prop name is same as the child extracted name
+            projects.map((proj) => (
+              <ProjectItem key={proj.id} project={proj} />
+            ))
+          }
+        </Row>
+      </Container>
     );
   }
 }

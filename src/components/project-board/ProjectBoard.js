@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import CardDeck from "react-bootstrap/CardDeck";
 import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -15,11 +16,10 @@ class ProjectBoard extends Component {
 
     return (
       <Container fluid className="justify-content-md-center">
-      <br/>
+        <br />
         <Link to={`/addProjectTask/${id}`} className="mb-3">
-          <Button>
-            <FontAwesomeIcon icon="plus" />
-            Create Project Task
+          <Button variant="light" size="lg">
+            <FontAwesomeIcon icon="plus-square" /> Create Project Task
           </Button>
         </Link>
 
@@ -39,8 +39,15 @@ class ProjectBoard extends Component {
                   project_task.acceptanceCriteria
                 </Card.Text>
 
-                <Button variant="primary">View / Update</Button>
-                <Button variant="danger">Delete</Button>
+                <ButtonGroup>
+                  {" "}
+                  <Button variant="primary">
+                    <FontAwesomeIcon icon="edit" /> View / Update
+                  </Button>
+                  <Button variant="danger">
+                    <FontAwesomeIcon icon="minus-square" /> Delete
+                  </Button>
+                </ButtonGroup>
               </Card.Body>
             </Card>
           </Card>
