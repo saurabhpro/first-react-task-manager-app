@@ -24,6 +24,7 @@ import UpdateProject from "./components/project/UpdateProject";
 import NotFoundPage from "./components/not-found/NotFoundPage";
 import ProjectBoard from "./components/project-board/ProjectBoard";
 import AddProjectTask from "./components/project-board/project-task/AddProjectTask";
+import UpdateProjectTask from "./components/project-board/project-task/UpdateProjectTask";
 
 library.add(
   faCheckSquare,
@@ -57,6 +58,11 @@ function App() {
               exact
               path="/addProjectTask/:id"
               component={AddProjectTask}
+            />
+            <Route
+              exact
+              path="/updateProjectTask/:backlogId/:projectTaskId"
+              component={UpdateProjectTask}
             />
             <Route path="*" component={NotFoundPage} />
           </Switch>

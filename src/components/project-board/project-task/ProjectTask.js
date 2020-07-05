@@ -7,6 +7,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 class ProjectTask extends Component {
   render() {
@@ -34,12 +35,20 @@ class ProjectTask extends Component {
 
             <ButtonGroup>
               {" "}
-              <Button variant="primary" className="mr-2">
-                <FontAwesomeIcon icon="edit" /> View / Update
-              </Button>
-              <Button variant="danger">
-                <FontAwesomeIcon icon="minus-square" /> Delete
-              </Button>
+              <Link
+                to={`/updateProjectTask/${projectTask.projectIdentifier}/${projectTask.projectSequence}`}
+              >
+                <Button variant="primary" className="mr-2">
+                  <FontAwesomeIcon icon="edit" /> View / Update
+                </Button>
+              </Link>
+              <Link
+                to={`/deleteProjectTask/${projectTask.projectIdentifier}/${projectTask.projectSequence}`}
+              >
+                <Button variant="danger">
+                  <FontAwesomeIcon icon="minus-square" /> Delete
+                </Button>
+              </Link>
             </ButtonGroup>
           </Card.Body>
           <Card.Text>
