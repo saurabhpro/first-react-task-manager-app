@@ -17,7 +17,7 @@ class Backlog extends Component {
 
     return (
       <CardDeck>
-        <Card bg="link" text="black" className="text-center p-2">
+        <Card bg="dark" text="white" className="text-center p-2">
           <Card.Header as="h5" className="mb-2">
             TO DO
           </Card.Header>
@@ -35,12 +35,7 @@ class Backlog extends Component {
           </Card.Header>
         </Card>
 
-        <Card
-          md={{ offset: 1 }}
-          bg="success"
-          text="white"
-          className="text-center p-2"
-        >
+        <Card bg="success" text="white" className="text-center p-2">
           <Card.Header as="h5" className="mb-2">
             Done
           </Card.Header>

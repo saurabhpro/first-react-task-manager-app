@@ -29,6 +29,7 @@ function based components
 stateless
 
 - https://getbootstrap.com/docs/4.0/utilities/spacing/
+- https://medium.com/better-programming/using-moment-js-in-react-native-d1b6ebe226d4
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
