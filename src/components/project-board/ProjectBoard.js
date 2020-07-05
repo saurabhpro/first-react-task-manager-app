@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 
 import Container from "react-bootstrap/Container";
-import Card from "react-bootstrap/Card";
-import CardDeck from "react-bootstrap/CardDeck";
+import { Link } from "react-router-dom";
+
 import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { Link } from "react-router-dom";
+import Backlog from "./Backlog";
 
 class ProjectBoard extends Component {
   render() {
@@ -22,67 +20,8 @@ class ProjectBoard extends Component {
             <FontAwesomeIcon icon="plus-square" /> Create Project Task
           </Button>
         </Link>
-
         <hr />
-
-        <CardDeck>
-          <Card bg="secondary" text="white" className="mb-2 text-center p-2">
-            <Card.Header as="h5">TO DO</Card.Header>
-
-            <Card text="dark">
-              <Card.Header className="text-primary">
-                ID: projectSequence -- Priority: priorityString
-              </Card.Header>
-              <Card.Body>
-                <Card.Title>projectTask.summary Hey Summary</Card.Title>
-                <Card.Text className="text-truncate">
-                  project_task.acceptanceCriteria
-                </Card.Text>
-
-                <ButtonGroup>
-                  {" "}
-                  <Button variant="primary">
-                    <FontAwesomeIcon icon="edit" /> View / Update
-                  </Button>
-                  <Button variant="danger">
-                    <FontAwesomeIcon icon="minus-square" /> Delete
-                  </Button>
-                </ButtonGroup>
-              </Card.Body>
-            </Card>
-          </Card>
-
-          <Card
-            md={{ offset: 1 }}
-            bg="warning"
-            text="white"
-            className="mb-2 text-center p-2"
-          >
-            <Card.Header as="h5">In Progress</Card.Header>
-            <Card text="dark">
-              <Card.Header className="text-primary">
-                ID: projectSequence -- Priority: priorityString
-              </Card.Header>
-              <Card.Body></Card.Body>
-            </Card>
-          </Card>
-
-          <Card
-            md={{ offset: 1 }}
-            bg="success"
-            text="white"
-            className="mb-2 text-center p-2"
-          >
-            <Card.Header as="h5">Done</Card.Header>
-
-            <Card text="dark">
-              <Card.Header className="text-primary">
-                ID: projectSequence -- Priority: priorityString
-              </Card.Header>
-              <Card.Body></Card.Body>
-            </Card>
-          </Card>
-        </CardDeck>
+        <Backlog/>
       </Container>
     );
   }
