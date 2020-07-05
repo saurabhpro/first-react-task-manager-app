@@ -8,7 +8,16 @@ import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Backlog from "./Backlog";
 
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getBacklog } from "../../actions/backlogActions";
+
 class ProjectBoard extends Component {
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    this.props.getBacklog(id);
+  }
+
   render() {
     const { id } = this.props.match.params;
 
@@ -21,10 +30,20 @@ class ProjectBoard extends Component {
           </Button>
         </Link>
         <hr />
-        <Backlog/>
+        <Backlog />
       </Container>
     );
   }
 }
 
-export default ProjectBoard;
+ProjectBoard.propTypes = {
+  getBacklog: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  backlog: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  backlog: state.backlog,
+});
+
+export default connect(mapStateToProps, { getBacklog })(ProjectBoard);

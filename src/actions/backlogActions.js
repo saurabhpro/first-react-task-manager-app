@@ -19,7 +19,7 @@ export const addProjectTask = (backlogId, projectTask, history) => async (
     );
 
     history.push(`/projectBoard/${backlogId}`);
-    console.log(serverResponse);
+    console.debug(serverResponse);
 
     //clear out any previous errors from state
     dispatch({
@@ -32,5 +32,38 @@ export const addProjectTask = (backlogId, projectTask, history) => async (
       type: GET_ERRORS,
       payload: error.response.data,
     });
+  }
+};
+
+// multiple project tasks
+export const getBacklog = (backlogId) => async (dispatch) => {
+  try {
+    const serverResponse = await axios.get(
+      baseURL + `/api/projects/${backlogId}/backlog/`
+    );
+    console.debug(serverResponse);
+
+    dispatch({
+      type: GET_BACKLOG,
+      payload: serverResponse.data,
+    });
+  } catch (error) {}
+};
+
+export const getProjectTask = (backlogId, projectTaskId, history) => async (
+  dispatch
+) => {
+  try {
+    const serverResponse = await axios.get(
+      baseURL + `/api/backlogs/${backlogId}/tasks/${projectTaskId}`
+    );
+    console.debug(serverResponse);
+
+    dispatch({
+      type: GET_PROJECT_TASK,
+      payload: serverResponse.data,
+    });
+  } catch (error) {
+    //history.push("/error");
   }
 };
