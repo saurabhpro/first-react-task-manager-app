@@ -1,18 +1,28 @@
 import React, { Component } from "react";
 
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import CardDeck from "react-bootstrap/CardDeck";
 import Button from "react-bootstrap/Button";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { Link } from "react-router-dom";
+
 class ProjectBoard extends Component {
   render() {
+    const { id } = this.props.match.params;
+
     return (
       <Container fluid className="justify-content-md-center">
-        <Row>
-          <Button>Create Project Task</Button>
-        </Row>
+      <br/>
+        <Link to={`/addProjectTask/${id}`} className="mb-3">
+          <Button>
+            <FontAwesomeIcon icon="plus" />
+            Create Project Task
+          </Button>
+        </Link>
+
         <hr />
 
         <CardDeck>

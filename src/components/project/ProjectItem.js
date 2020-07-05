@@ -23,7 +23,7 @@ class ProjectItem extends Component {
     const { project } = this.props;
     console.log(this.props);
     return (
-      <Container className="card card-body bg-light mb-3">
+      <Container className="bg-light mb-3">
         <Row>
           <div className="col-2">
             <span className="mx-auto">{project.projectIdentifier}</span>
@@ -38,7 +38,7 @@ class ProjectItem extends Component {
             <Link to={`/projectBoard/${project.projectIdentifier}`}>
               <Button variant="outline-primary" block>
                 <div className="float-left">
-                  <FontAwesomeIcon icon="coffee" /> Project Board
+                  <FontAwesomeIcon icon="tasks" /> Project Board
                 </div>
               </Button>
             </Link>

@@ -10,6 +10,9 @@ import {
   faCoffee,
   faEdit,
   faMinus,
+  faBackward,
+  faTasks,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -20,8 +23,9 @@ import appStore from "./store/store";
 import UpdateProject from "./components/project/UpdateProject";
 import NotFoundPage from "./components/not-found/NotFoundPage";
 import ProjectBoard from "./components/project-board/ProjectBoard";
+import AddProjectTask from "./components/project-board/project-task/AddProjectTask";
 
-library.add(faCheckSquare, faCoffee, faEdit, faMinus);
+library.add(faCheckSquare, faCoffee, faEdit, faMinus, faPlus, faBackward, faTasks);
 
 function App() {
   return (
@@ -41,6 +45,7 @@ function App() {
             <Route exact path="/addProject" component={AddProject} />
             <Route exact path="/updateProject/:id" component={UpdateProject} />
             <Route exact path="/projectBoard/:id" component={ProjectBoard} />
+            <Route exact path="/addProjectTask/:id" component={AddProjectTask} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </div>

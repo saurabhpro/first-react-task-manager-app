@@ -102,3 +102,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 - https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually
 -- npm install http-proxy-middleware --save
+
+
+## form select
+- https://react-select.com/home
