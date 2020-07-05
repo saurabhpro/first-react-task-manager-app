@@ -41,14 +41,14 @@ class ProjectItem extends Component {
                 to={`/projectBoard/${project.projectIdentifier}`}
                 className="btn-block"
               >
-                <Button variant="outline-primary" block>
+                <Button variant="outline-primary" block className="mb-1">
                   <div className="float-left">
                     <FontAwesomeIcon icon="tasks" /> Project Board
                   </div>
                 </Button>
               </Link>
               <Link to={`/updateProject/${project.projectIdentifier}`}>
-                <Button variant="outline-info" block>
+                <Button variant="outline-info" block className="mb-1">
                   <div className="float-left">
                     <FontAwesomeIcon icon="edit" /> Update Project Info
                   </div>

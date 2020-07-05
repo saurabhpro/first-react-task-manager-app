@@ -26,10 +26,11 @@ class ProjectBoard extends Component {
       <Container fluid className="justify-content-md-center">
         <br />
         <Link to={`/addProjectTask/${id}`} className="mb-3">
-          <Button variant="light" size="lg">
+          <Button variant="info" size="lg" className="float-left">
             <FontAwesomeIcon icon="plus-square" /> Create Project Task
           </Button>
         </Link>
+        <br/>
         <hr />
         <Backlog projectTasksProp={projectTasks} />
       </Container>

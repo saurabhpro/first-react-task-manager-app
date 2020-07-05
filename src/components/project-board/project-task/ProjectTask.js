@@ -6,22 +6,27 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import moment from "moment";
+
 class ProjectTask extends Component {
   render() {
+    const { projectTask } = this.props;
+    const createdAt = moment(projectTask).format("MMMM Do YYYY");
+
     return (
-      <Card text="dark">
+      <Card text="dark" className="mb-2">
         <Card.Header className="text-primary">
-          ID: projectSequence -- Priority: priorityString
+          ID: {projectTask.projectSequence} & Priority: {projectTask.priority}
         </Card.Header>
         <Card.Body>
-          <Card.Title>projectTask.summary Hey Summary</Card.Title>
+          <Card.Title>{projectTask.summary}</Card.Title>
           <Card.Text className="text-truncate">
-            project_task.acceptanceCriteria
+            {projectTask.acceptanceCriteria}
           </Card.Text>
 
           <ButtonGroup>
             {" "}
-            <Button variant="primary">
+            <Button variant="primary" className="mr-2">
               <FontAwesomeIcon icon="edit" /> View / Update
             </Button>
             <Button variant="danger">
@@ -29,6 +34,9 @@ class ProjectTask extends Component {
             </Button>
           </ButtonGroup>
         </Card.Body>
+        <Card.Text>
+          <small className="text-muted">Created on {createdAt}</small>
+        </Card.Text>
       </Card>
     );
   }
