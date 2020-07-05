@@ -65,7 +65,7 @@ class AddProject extends Component {
     const { errors } = this.state;
 
     return (
-      <Container className="p-2 flex-fill justify-content-center">
+      <Container fluid className="p-2 flex-fill justify-content-center">
         <div className="col-md-8 m-auto">
           <h5 className="display-4 ">Create Project form</h5>
           <hr />

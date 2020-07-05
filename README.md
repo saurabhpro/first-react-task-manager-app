@@ -1,4 +1,4 @@
-
+![ui-screenshots](src/assets/ui-screenshots/currentUI.png)
 
 - $ npm i --save @fortawesome/fontawesome-svg-core  @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
 - https://react-lite-with-bootstrap.herokuapp.com/components.html#buttons
@@ -28,7 +28,11 @@ LifecycleHooks
 function based components
 stateless
 
+- https://getbootstrap.com/docs/4.0/utilities/spacing/
+- https://medium.com/better-programming/using-moment-js-in-react-native-d1b6ebe226d4
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
 
 ## Available Scripts
 
@@ -102,3 +106,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 - https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually
 -- npm install http-proxy-middleware --save
+
+
+## form select
+- https://react-select.com/home

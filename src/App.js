@@ -9,7 +9,10 @@ import {
   faCheckSquare,
   faCoffee,
   faEdit,
-  faMinus,
+  faBackward,
+  faTasks,
+  faPlusSquare,
+  faMinusSquare,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -19,8 +22,19 @@ import { Provider } from "react-redux";
 import appStore from "./store/store";
 import UpdateProject from "./components/project/UpdateProject";
 import NotFoundPage from "./components/not-found/NotFoundPage";
+import ProjectBoard from "./components/project-board/ProjectBoard";
+import AddProjectTask from "./components/project-board/project-task/AddProjectTask";
+import UpdateProjectTask from "./components/project-board/project-task/UpdateProjectTask";
 
-library.add(faCheckSquare, faCoffee, faEdit, faMinus);
+library.add(
+  faCheckSquare,
+  faCoffee,
+  faEdit,
+  faMinusSquare,
+  faPlusSquare,
+  faBackward,
+  faTasks
+);
 
 function App() {
   return (
@@ -30,13 +44,26 @@ function App() {
       }
       <Router>
         <div className="App">
-          <h1>Welcome to Saurabh's First React App</h1>
+          {
+            //<h1>Welcome to Saurabh's First React App</h1>
+          }
           <Header />
           <Switch>
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/addProject" component={AddProject} />
             <Route exact path="/updateProject/:id" component={UpdateProject} />
+            <Route exact path="/projectBoard/:id" component={ProjectBoard} />
+            <Route
+              exact
+              path="/addProjectTask/:id"
+              component={AddProjectTask}
+            />
+            <Route
+              exact
+              path="/updateProjectTask/:backlogId/:projectTaskId"
+              component={UpdateProjectTask}
+            />
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </div>

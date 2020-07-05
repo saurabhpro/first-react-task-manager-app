@@ -16,7 +16,7 @@ export default class header extends Component {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse className="justify-content-end">
             <Nav className="mr-auto">
-              <Nav.Link href="">Home</Nav.Link>
+              <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/dashboard">Dashboard</Nav.Link>
             </Nav>
 
