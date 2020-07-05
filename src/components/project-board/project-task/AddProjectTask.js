@@ -11,6 +11,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addProjectTask } from "../../../actions/backlogActions";
 
+import classnames from "classnames";
+
 class AddProjectTask extends Component {
   constructor(props) {
     super(props);
@@ -60,8 +62,21 @@ class AddProjectTask extends Component {
     console.debug(newProjectTask);
   };
 
+  // Life Cycle Hooks
+  // https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
+  // https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html (migration)
+
+  static getDerivedStateFromProps = (nextProps, state) => {
+    if (nextProps.errors) {
+      state.errors = nextProps.errors;
+    }
+
+    return state;
+  };
+
   render() {
     const { id } = this.props.match.params;
+    const { errors } = this.state;
 
     return (
       <Container fluid className="p-2 flex-fill justify-content-center">
@@ -81,10 +96,16 @@ class AddProjectTask extends Component {
               <Form.Control
                 as="input"
                 name="summary"
+                className={classnames({
+                  "is-invalid": errors.summary,
+                })}
                 placeholder="Project Task summary"
                 value={this.state.summary}
                 onChange={this.onChange}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.summary}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
               <Form.Label>Acceptance Criteria</Form.Label>
@@ -96,7 +117,6 @@ class AddProjectTask extends Component {
                 onChange={this.onChange}
               />
             </Form.Group>
-
             <Form.Group>
               <Form.Label>Due Date</Form.Label>
               <Form.Control
@@ -157,4 +177,5 @@ AddProjectTask.propTypes = {
 const mapStateToProps = (state) => ({
   errors: state.errors,
 });
+
 export default connect(mapStateToProps, { addProjectTask })(AddProjectTask);
