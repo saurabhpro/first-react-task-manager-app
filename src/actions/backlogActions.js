@@ -83,7 +83,7 @@ export const updateProjectTask = (
 ) => async (dispatch) => {
   try {
     await axios.patch(
-      `/api//backlogs/${backlogId}/tasks/${projectTaskId}`,
+      `/api/backlogs/${backlogId}/tasks/${projectTaskId}`,
       projectTask
     );
 
@@ -96,6 +96,22 @@ export const updateProjectTask = (
     dispatch({
       type: GET_ERRORS,
       payload: err.response.data,
+    });
+  }
+};
+
+export const deleteProjectTask = (backlogId, projectTaskId) => async (
+  dispatch
+) => {
+  if (
+    window.confirm(
+      `You are deleting project task ${projectTaskId}, this action cannot be undone?`
+    )
+  ) {
+    await axios.delete(`/api/backlogs/${backlogId}/tasks/${projectTaskId}`);
+    dispatch({
+      type: DELETE_PROJECT_TASK,
+      payload: projectTaskId,
     });
   }
 };

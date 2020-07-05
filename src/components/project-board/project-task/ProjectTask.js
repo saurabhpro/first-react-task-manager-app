@@ -8,8 +8,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { deleteProjectTask } from "../../../actions/backlogActions";
+import PropTypes from "prop-types";
 
 class ProjectTask extends Component {
+  onDeleteClick(backlogId, projectTaskId) {
+    this.props.deleteProjectTask(backlogId, projectTaskId);
+  }
+
   render() {
     const { projectTask } = this.props;
     //using moment.js
@@ -42,13 +49,16 @@ class ProjectTask extends Component {
                   <FontAwesomeIcon icon="edit" /> View / Update
                 </Button>
               </Link>
-              <Link
-                to={`/deleteProjectTask/${projectTask.projectIdentifier}/${projectTask.projectSequence}`}
+              <Button
+                variant="danger"
+                onClick={this.onDeleteClick.bind(
+                  this,
+                  projectTask.projectIdentifier,
+                  projectTask.projectSequence
+                )}
               >
-                <Button variant="danger">
-                  <FontAwesomeIcon icon="minus-square" /> Delete
-                </Button>
-              </Link>
+                <FontAwesomeIcon icon="minus-square" /> Delete
+              </Button>
             </ButtonGroup>
           </Card.Body>
           <Card.Text>
@@ -82,4 +92,8 @@ class ProjectTask extends Component {
   };
 }
 
-export default ProjectTask;
+ProjectTask.propTypes = {
+  deleteProjectTask: PropTypes.func.isRequired,
+};
+
+export default connect(null, { deleteProjectTask })(ProjectTask);

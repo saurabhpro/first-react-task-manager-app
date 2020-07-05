@@ -25,7 +25,9 @@ export default function (state = initialState, action) {
     case DELETE_PROJECT_TASK:
       return {
         ...state,
-        //TODO filter out deleted tasks from redux
+        projectTasks: state.projectTasks.filter(
+          (projectTask) => projectTask.projectSequence !== action.payload
+        ),
       };
 
     default:
