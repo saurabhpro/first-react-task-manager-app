@@ -7,11 +7,36 @@ import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { addProjectTask } from "../../../actions/backlogActions";
+
 class AddProjectTask extends Component {
   constructor(props) {
     super(props);
+
+    const { id } = this.props.match.params;
+
+    this.state = {
+      summary: "",
+      acceptanceCriteria: "",
+      priority: 0,
+      status: "",
+      dueDate: "",
+      projectIdentifier: id,  //the path variable will become project identifier
+      errors: {},
+    };
+
+    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+
+
+  onChange = (event) => {
+    // this meants get the target name property and set it to the value property
+    // then setState
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
   onSubmit = () => {};
 
@@ -37,6 +62,8 @@ class AddProjectTask extends Component {
                 as="input"
                 name="summary"
                 placeholder="Project Task summary"
+                value={this.state.summary}
+                onChange={this.onChange}
               />
             </Form.Group>
             <Form.Group>
@@ -45,17 +72,31 @@ class AddProjectTask extends Component {
                 as="textarea"
                 name="acceptanceCriteria"
                 placeholder="Acceptance Criteria"
+                value={this.state.acceptanceCriteria}
+                onChange={this.onChange}
               />
             </Form.Group>
 
             <Form.Group>
               <Form.Label>Due Date</Form.Label>
-              <Form.Control type="date" name="dueDate" />
+              <Form.Control
+                type="date"
+                name="dueDate"
+                value={this.state.dueDate}
+                onChange={this.onChange}
+              />
             </Form.Group>
 
             <Form.Group>
               <Form.Label>Priority</Form.Label>
-              <Form.Control as="select" custom name="priority" required>
+              <Form.Control
+                as="select"
+                custom
+                name="priority"
+                required
+                value={this.state.priority}
+                onChange={this.onChange}
+              >
                 <option value={0}>Select Priority</option>
                 <option value={1}>High</option>
                 <option value={2}>Medium</option>
@@ -64,7 +105,13 @@ class AddProjectTask extends Component {
             </Form.Group>
             <Form.Group>
               <Form.Label>Status</Form.Label>
-              <Form.Control as="select" custom name="status">
+              <Form.Control
+                as="select"
+                custom
+                name="status"
+                value={this.state.status}
+                onChange={this.onChange}
+              >
                 <option value="">Select Status</option>
                 <option value="TO_DO">TO DO</option>
                 <option value="IN_PROGRESS">IN PROGRESS</option>
@@ -82,4 +129,8 @@ class AddProjectTask extends Component {
   }
 }
 
-export default AddProjectTask;
+AddProjectTask.propTypes = {
+  addProjectTask: PropTypes.func.isRequired,
+};
+
+export default connect(null, { addProjectTask })(AddProjectTask);
