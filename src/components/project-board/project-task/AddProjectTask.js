@@ -23,7 +23,7 @@ class AddProjectTask extends Component {
       priority: 0,
       status: "",
       dueDate: "",
-      projectIdentifier: id,  //the path variable will become project identifier
+      projectIdentifier: id, //the path variable will become project identifier
       errors: {},
     };
 
@@ -31,14 +31,34 @@ class AddProjectTask extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-
   onChange = (event) => {
     // this meants get the target name property and set it to the value property
     // then setState
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  onSubmit = () => {};
+  onSubmit = (event) => {
+    // prevents screen refresh once this event ends
+    event.preventDefault();
+    const newProjectTask = {
+      summary: this.state.summary,
+      acceptanceCriteria: this.state.acceptanceCriteria,
+      priority: this.state.priority,
+      projectIdentifier: this.state.projectIdentifier,
+      dueDate: this.state.dueDate,
+      status: this.state.status,
+    };
+
+    // call the post method
+    this.props.addProjectTask(
+      this.state.projectIdentifier,
+      newProjectTask,
+      this.props.history
+    );
+
+    //log for test
+    console.debug(newProjectTask);
+  };
 
   render() {
     const { id } = this.props.match.params;
@@ -131,6 +151,10 @@ class AddProjectTask extends Component {
 
 AddProjectTask.propTypes = {
   addProjectTask: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
-export default connect(null, { addProjectTask })(AddProjectTask);
+const mapStateToProps = (state) => ({
+  errors: state.errors,
+});
+export default connect(mapStateToProps, { addProjectTask })(AddProjectTask);

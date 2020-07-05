@@ -5,8 +5,8 @@ const baseURL = "http://localhost:8080";
 export const addProjectTask = (backlogId, projectTask, history) => async (
   dispatch
 ) => {
-  const serverResponse = await axios(
-    baseURL + `/api/backlog/${backlogId}`,
+  const serverResponse = await axios.post(
+    baseURL + `/api/projects/${backlogId}/backlog`,
     projectTask
   );
 
