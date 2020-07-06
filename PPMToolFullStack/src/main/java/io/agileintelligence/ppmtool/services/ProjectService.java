@@ -1,7 +1,7 @@
 package io.agileintelligence.ppmtool.services;
 
 import io.agileintelligence.ppmtool.domain.Project;
-import io.agileintelligence.ppmtool.exceptions.ProjectIdException;
+import io.agileintelligence.ppmtool.exceptions.projectid.ProjectIdException;
 import io.agileintelligence.ppmtool.repositories.ProjectRepository;
 import org.springframework.stereotype.Service;
 

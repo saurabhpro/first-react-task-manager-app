@@ -3,7 +3,7 @@ package io.agileintelligence.ppmtool.services;
 import io.agileintelligence.ppmtool.domain.Backlog;
 import io.agileintelligence.ppmtool.domain.Project;
 import io.agileintelligence.ppmtool.domain.ProjectTask;
-import io.agileintelligence.ppmtool.exceptions.ProjectNotFoundException;
+import io.agileintelligence.ppmtool.exceptions.projectnotfound.ProjectNotFoundException;
 import io.agileintelligence.ppmtool.repositories.BacklogRepository;
 import io.agileintelligence.ppmtool.repositories.ProjectRepository;
 import io.agileintelligence.ppmtool.repositories.ProjectTaskRepository;

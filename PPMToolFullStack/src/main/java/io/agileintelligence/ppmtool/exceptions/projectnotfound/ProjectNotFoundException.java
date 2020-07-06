@@ -1,4 +1,4 @@
-package io.agileintelligence.ppmtool.exceptions;
+package io.agileintelligence.ppmtool.exceptions.projectnotfound;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
