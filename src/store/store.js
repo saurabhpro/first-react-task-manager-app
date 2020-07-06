@@ -20,7 +20,7 @@ if (window.navigator.userAgent.includes("Chrome")) {
       applyMiddleware(...middleware),
       /* preloadedState, */ window.__REDUX_DEVTOOLS_EXTENSION__
         ? window.__REDUX_DEVTOOLS_EXTENSION__()
-        : f => f
+        : (f) => f
     )
   );
 } else {
