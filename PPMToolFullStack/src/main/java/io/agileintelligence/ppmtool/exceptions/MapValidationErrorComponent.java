@@ -1,6 +1,5 @@
 package io.agileintelligence.ppmtool.exceptions;
 
-import io.agileintelligence.ppmtool.exceptions.BindingResultCustomException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
