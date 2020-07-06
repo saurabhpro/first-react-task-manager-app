@@ -3,12 +3,13 @@ package io.agileintelligence.ppmtool.web;
 import io.agileintelligence.ppmtool.domain.ProjectTask;
 import io.agileintelligence.ppmtool.services.MapValidationErrorService;
 import io.agileintelligence.ppmtool.services.ProjectTaskService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.Optional;
 
 @RestController
@@ -17,7 +18,6 @@ import java.util.Optional;
 public class BacklogController {
 
     private final ProjectTaskService projectTaskService;
-
     private final MapValidationErrorService mapValidationErrorService;
 
     public BacklogController(ProjectTaskService projectTaskService, MapValidationErrorService mapValidationErrorService) {
@@ -35,7 +35,12 @@ public class BacklogController {
 
         ProjectTask projectTask1 = projectTaskService.addProjectTask(projectIdentifier, projectTask);
 
-        return new ResponseEntity<>(projectTask1, HttpStatus.CREATED);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(projectTask1.getProjectSequence())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(projectTask1);
     }
 
     @GetMapping("/projects/{projectIdentifier}/backlog")
@@ -44,9 +49,9 @@ public class BacklogController {
     }
 
     @GetMapping("/backlogs/{backlogId}/tasks/{projectTaskId}")
-    public ResponseEntity<?> getProjectTask(@PathVariable String backlogId, @PathVariable String projectTaskId) {
+    public ResponseEntity<ProjectTask> getProjectTask(@PathVariable String backlogId, @PathVariable String projectTaskId) {
         Optional<ProjectTask> projectTask = projectTaskService.findPTByProjectSequence(backlogId, projectTaskId);
-        return new ResponseEntity<>(projectTask.get(), HttpStatus.OK);
+        return ResponseEntity.ok(projectTask.get());
     }
 
     @PatchMapping("/backlogs/{backlogId}/tasks/{projectTaskId}")
@@ -58,7 +63,7 @@ public class BacklogController {
 
         ProjectTask updatedTask = projectTaskService.updateByProjectSequence(projectTask, backlogId, projectTaskId);
 
-        return new ResponseEntity<>(updatedTask, HttpStatus.OK);
+        return ResponseEntity.ok(updatedTask);
 
     }
 
@@ -66,6 +71,6 @@ public class BacklogController {
     public ResponseEntity<?> deleteProjectTask(@PathVariable String backlogId, @PathVariable String projectTaskId) {
         projectTaskService.deletePTByProjectSequence(backlogId, projectTaskId);
 
-        return new ResponseEntity<>("Project Task " + projectTaskId + " was deleted successfully", HttpStatus.OK);
+        return ResponseEntity.ok("Project Task " + projectTaskId + " was deleted successfully");
     }
 }

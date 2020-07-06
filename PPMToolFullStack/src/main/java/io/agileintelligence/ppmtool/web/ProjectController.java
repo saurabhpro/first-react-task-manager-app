@@ -6,11 +6,13 @@ import io.agileintelligence.ppmtool.domain.Project;
 import io.agileintelligence.ppmtool.repositories.BacklogRepository;
 import io.agileintelligence.ppmtool.services.MapValidationErrorService;
 import io.agileintelligence.ppmtool.services.ProjectService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 /*this allows url from some other server to be allowed*/
 @CrossOrigin
@@ -45,16 +47,22 @@ public class ProjectController {
         }
 
         Project project1 = projectService.saveOrUpdateProject(project);
-        return new ResponseEntity<>(project1, HttpStatus.CREATED);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(project1.getProjectIdentifier())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(project1);
     }
 
 
     @GetMapping("/{projectId}")
-    public ResponseEntity<?> getProjectById(@PathVariable String projectId) {
+    public ResponseEntity<Project> getProjectById(@PathVariable String projectId) {
 
         Project project = projectService.findProjectByIdentifier(projectId);
 
-        return new ResponseEntity<>(project, HttpStatus.OK);
+        return ResponseEntity.ok(project);
     }
 
 
@@ -68,6 +76,6 @@ public class ProjectController {
     public ResponseEntity<?> deleteProject(@PathVariable String projectId) {
         projectService.deleteProjectByIdentifier(projectId);
 
-        return new ResponseEntity<>("Project with ID: '" + projectId + "' was deleted", HttpStatus.OK);
+        return ResponseEntity.ok("Project with ID: '" + projectId + "' was deleted");
     }
 }
