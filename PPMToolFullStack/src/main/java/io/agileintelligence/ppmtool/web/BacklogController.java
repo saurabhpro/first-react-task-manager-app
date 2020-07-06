@@ -1,7 +1,7 @@
 package io.agileintelligence.ppmtool.web;
 
 import io.agileintelligence.ppmtool.domain.ProjectTask;
-import io.agileintelligence.ppmtool.services.MapValidationErrorService;
+import io.agileintelligence.ppmtool.exceptions.MapValidationErrorComponent;
 import io.agileintelligence.ppmtool.services.ProjectTaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -18,20 +18,19 @@ import java.util.Optional;
 public class BacklogController {
 
     private final ProjectTaskService projectTaskService;
-    private final MapValidationErrorService mapValidationErrorService;
+    private final MapValidationErrorComponent mapValidationErrorComponent;
 
-    public BacklogController(ProjectTaskService projectTaskService, MapValidationErrorService mapValidationErrorService) {
+    public BacklogController(ProjectTaskService projectTaskService, MapValidationErrorComponent mapValidationErrorComponent) {
         this.projectTaskService = projectTaskService;
-        this.mapValidationErrorService = mapValidationErrorService;
+        this.mapValidationErrorComponent = mapValidationErrorComponent;
     }
 
     @PostMapping("/projects/{projectIdentifier}/backlog")
-    public ResponseEntity<?> addPTtoBacklog(@Valid @RequestBody ProjectTask projectTask,
-                                            BindingResult result,
-                                            @PathVariable String projectIdentifier) {
+    public ResponseEntity<ProjectTask> addPTtoBacklog(@Valid @RequestBody ProjectTask projectTask,
+                                                      BindingResult result,
+                                                      @PathVariable String projectIdentifier) {
 
-        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if (errorMap != null) return errorMap;
+        mapValidationErrorComponent.mapValidationErrors(result);
 
         ProjectTask projectTask1 = projectTaskService.addProjectTask(projectIdentifier, projectTask);
 
@@ -55,11 +54,10 @@ public class BacklogController {
     }
 
     @PatchMapping("/backlogs/{backlogId}/tasks/{projectTaskId}")
-    public ResponseEntity<?> updateProjectTask(@Valid @RequestBody ProjectTask projectTask, BindingResult result,
-                                               @PathVariable String backlogId, @PathVariable String projectTaskId) {
+    public ResponseEntity<ProjectTask> updateProjectTask(@Valid @RequestBody ProjectTask projectTask, BindingResult result,
+                                                         @PathVariable String backlogId, @PathVariable String projectTaskId) {
 
-        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if (errorMap != null) return errorMap;
+        mapValidationErrorComponent.mapValidationErrors(result);
 
         ProjectTask updatedTask = projectTaskService.updateByProjectSequence(projectTask, backlogId, projectTaskId);
 
@@ -68,7 +66,7 @@ public class BacklogController {
     }
 
     @DeleteMapping("/backlogs/{backlogId}/tasks/{projectTaskId}")
-    public ResponseEntity<?> deleteProjectTask(@PathVariable String backlogId, @PathVariable String projectTaskId) {
+    public ResponseEntity<Object> deleteProjectTask(@PathVariable String backlogId, @PathVariable String projectTaskId) {
         projectTaskService.deletePTByProjectSequence(backlogId, projectTaskId);
 
         return ResponseEntity.ok("Project Task " + projectTaskId + " was deleted successfully");

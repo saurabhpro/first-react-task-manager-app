@@ -4,7 +4,7 @@ package io.agileintelligence.ppmtool.web;
 import io.agileintelligence.ppmtool.domain.Backlog;
 import io.agileintelligence.ppmtool.domain.Project;
 import io.agileintelligence.ppmtool.repositories.BacklogRepository;
-import io.agileintelligence.ppmtool.services.MapValidationErrorService;
+import io.agileintelligence.ppmtool.exceptions.MapValidationErrorComponent;
 import io.agileintelligence.ppmtool.services.ProjectService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -22,19 +22,19 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final BacklogRepository backlogRepository;
-    private final MapValidationErrorService mapValidationErrorService;
+    private final MapValidationErrorComponent mapValidationErrorComponent;
 
-    public ProjectController(ProjectService projectService, BacklogRepository backlogRepository, MapValidationErrorService mapValidationErrorService) {
+    public ProjectController(ProjectService projectService, BacklogRepository backlogRepository, MapValidationErrorComponent mapValidationErrorComponent) {
         this.projectService = projectService;
         this.backlogRepository = backlogRepository;
-        this.mapValidationErrorService = mapValidationErrorService;
+        this.mapValidationErrorComponent = mapValidationErrorComponent;
     }
 
     @PostMapping
     public ResponseEntity<?> createNewProject(@Validated @RequestBody Project project, BindingResult result) {
 
-        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if (errorMap != null) return errorMap;
+        mapValidationErrorComponent.mapValidationErrors(result);
+
         if (project.getId() == null) {
             Backlog backlog = new Backlog();
             project.setBacklog(backlog);
@@ -65,15 +65,13 @@ public class ProjectController {
         return ResponseEntity.ok(project);
     }
 
-
     @GetMapping
     public Iterable<Project> getAllProjects() {
         return projectService.findAllProjects();
     }
 
-
     @DeleteMapping("/{projectId}")
-    public ResponseEntity<?> deleteProject(@PathVariable String projectId) {
+    public ResponseEntity<Object> deleteProject(@PathVariable String projectId) {
         projectService.deleteProjectByIdentifier(projectId);
 
         return ResponseEntity.ok("Project with ID: '" + projectId + "' was deleted");

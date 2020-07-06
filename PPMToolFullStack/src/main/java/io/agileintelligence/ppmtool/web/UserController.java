@@ -1,7 +1,7 @@
 package io.agileintelligence.ppmtool.web;
 
 import io.agileintelligence.ppmtool.domain.User;
-import io.agileintelligence.ppmtool.services.MapValidationErrorService;
+import io.agileintelligence.ppmtool.exceptions.MapValidationErrorComponent;
 import io.agileintelligence.ppmtool.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +17,11 @@ import javax.validation.Valid;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final MapValidationErrorService mapValidationErrorService;
+    private final MapValidationErrorComponent mapValidationErrorComponent;
     private final UserService userService;
 
-    public UserController(MapValidationErrorService mapValidationErrorService, UserService userService) {
-        this.mapValidationErrorService = mapValidationErrorService;
+    public UserController(MapValidationErrorComponent mapValidationErrorComponent, UserService userService) {
+        this.mapValidationErrorComponent = mapValidationErrorComponent;
         this.userService = userService;
     }
 
@@ -29,11 +29,10 @@ public class UserController {
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) {
         // Validate passwords match
 
-        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if (errorMap != null) return errorMap;
+        mapValidationErrorComponent.mapValidationErrors(result);
 
         User newUser = userService.saveUser(user);
 
-        return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 }
