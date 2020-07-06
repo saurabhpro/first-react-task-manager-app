@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
      * Method from @UserDetailService
      *
      * @param username
-     * @return
+     * @return this is whu our USER implements UserDetails
      * @throws UsernameNotFoundException
      */
     @Override
