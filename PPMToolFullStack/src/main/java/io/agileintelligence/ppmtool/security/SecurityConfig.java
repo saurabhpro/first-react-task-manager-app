@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    // how to deal with username and passwords and roles are all done here  - do see the in-memory pwd thing
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
@@ -55,11 +56,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new JWTAuthenticationFilter();
     }
 
-
+    /**
+     * Securing the urls and allowing role-based access to these urls.
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+        http.cors() //Cross-Origin Resource Sharing
+                .and()
+                .csrf().disable()   //Cross-Site Request Forgery https://www.baeldung.com/spring-security-csrf
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)  // add exception handler like 401
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //REST Apis are stateless
@@ -80,10 +85,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 ).permitAll()
                 .antMatchers(SecurityConstants.SIGN_UP_URLS).permitAll()
                 .antMatchers(SecurityConstants.H2_URL).permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated();// rest any other request should be authenticated
 
-
-        http
-                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        //Allows adding a {@link Filter} before one of the known {@link Filter} classes.
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
