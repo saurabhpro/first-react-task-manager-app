@@ -21,7 +21,7 @@ class ProjectTaskServiceTest {
     private ProjectTaskRepository projectTaskRepository;
 
     @MockBean
-    private ProjectRepository projectRepository;
+    private ProjectService projectService;
 
     @Test
     void getProjectSequence() {
@@ -32,7 +32,7 @@ class ProjectTaskServiceTest {
         backlog.setProject(project);
         backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
 
-        projectTaskService = new ProjectTaskService(backlogRepository, projectTaskRepository, projectRepository);
+        projectTaskService = new ProjectTaskService(backlogRepository, projectTaskRepository, projectService);
 
         var sequenceNo = projectTaskService.getProjectSequence("APP64", backlog);
         Assertions.assertEquals("APP64-1", sequenceNo);

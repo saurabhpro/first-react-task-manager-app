@@ -1,4 +1,4 @@
-package io.agileintelligence.ppmtool.exceptions;
+package io.agileintelligence.ppmtool.exceptions.projectid;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
