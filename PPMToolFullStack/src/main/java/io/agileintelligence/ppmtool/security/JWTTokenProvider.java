@@ -59,7 +59,7 @@ public class JWTTokenProvider {
             return getClaimsFromAuthToken(token);
         } catch (SignatureException sEx) {
             log.error("JWT Signature Invalid");
-            throw  sEx;
+            throw sEx;
         } catch (MalformedJwtException mEx) {
             log.error("Invalid JWT token");
             throw mEx;

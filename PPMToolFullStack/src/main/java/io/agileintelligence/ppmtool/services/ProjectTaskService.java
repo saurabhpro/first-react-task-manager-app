@@ -1,11 +1,9 @@
 package io.agileintelligence.ppmtool.services;
 
 import io.agileintelligence.ppmtool.domain.Backlog;
-import io.agileintelligence.ppmtool.domain.Project;
 import io.agileintelligence.ppmtool.domain.ProjectTask;
 import io.agileintelligence.ppmtool.exceptions.projectnotfound.ProjectNotFoundException;
 import io.agileintelligence.ppmtool.repositories.BacklogRepository;
-import io.agileintelligence.ppmtool.repositories.ProjectRepository;
 import io.agileintelligence.ppmtool.repositories.ProjectTaskRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -18,49 +16,42 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ProjectTaskService {
 
     private final BacklogRepository backlogRepository;
-
     private final ProjectTaskRepository projectTaskRepository;
-    private final ProjectRepository projectRepository;
+    private final ProjectService projectService;
 
-
-    public ProjectTaskService(BacklogRepository backlogRepository, ProjectTaskRepository projectTaskRepository, ProjectRepository projectRepository) {
+    public ProjectTaskService(BacklogRepository backlogRepository, ProjectTaskRepository projectTaskRepository, ProjectService projectService) {
         this.backlogRepository = backlogRepository;
         this.projectTaskRepository = projectTaskRepository;
-        this.projectRepository = projectRepository;
+        this.projectService = projectService;
     }
 
+    public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask, String username) {
+        //PTs to be added to a specific project, project != null, BL exists
+        Backlog backlog = projectService
+                .findProjectByIdentifier(projectIdentifier, username)
+                .getBacklog();
 
-    public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask) {
+        if (backlog != null) {
+            //set the bl to pt
+            projectTask.setBacklog(backlog);
+            projectTask.setProjectIdentifier(projectIdentifier);
 
-        try {
-            //PTs to be added to a specific project, project != null, BL exists
-            Optional<Backlog> backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
+            // generate and get sequence
+            final var projectSequence = getProjectSequence(projectIdentifier, backlog);
+            //Add Sequence to Project Task
+            projectTask.setProjectSequence(projectSequence);
 
-            if (backlog.isPresent()) {
-                //set the bl to pt
-                projectTask.setBacklog(backlog.get());
-                projectTask.setProjectIdentifier(projectIdentifier);
-
-                // generate and get sequence
-                final var projectSequence = getProjectSequence(projectIdentifier, backlog.get());
-                //Add Sequence to Project Task
-                projectTask.setProjectSequence(projectSequence);
-
-                if (projectTask.getPriority() == null || projectTask.getPriority() == 0) {
-                    projectTask.setPriority(3);
-                }
-
-                //INITIAL status when status is null
-                if (StringUtils.isEmpty(projectTask.getStatus())) {
-                    projectTask.setStatus("TO_DO");
-                }
-
+            if (projectTask.getPriority() == null || projectTask.getPriority() == 0) {
+                projectTask.setPriority(3);
             }
 
-            return projectTaskRepository.save(projectTask);
-        } catch (Exception e) {
-            throw new ProjectNotFoundException("Project not Found");
+            //INITIAL status when status is null
+            if (StringUtils.isEmpty(projectTask.getStatus())) {
+                projectTask.setStatus("TO_DO");
+            }
         }
+
+        return projectTaskRepository.save(projectTask);
     }
 
     protected String getProjectSequence(String projectIdentifier, Backlog backlog) {
@@ -75,22 +66,20 @@ public class ProjectTaskService {
         return projectIdentifier + "-" + backlogSequence;
     }
 
-    public List<ProjectTask> findBacklogById(String projectIdentifier) {
-        Project project = projectRepository.findByProjectIdentifier(projectIdentifier);
+    public List<ProjectTask> findBacklogById(String projectIdentifier, String username) {
+        // validate
+        projectService.findProjectByIdentifier(projectIdentifier, username);
 
-        if (project == null) {
-            throw new ProjectNotFoundException("Project with ID: '" + projectIdentifier + "' does not exist");
-        }
         return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier);
     }
 
-    public Optional<ProjectTask> findPTByProjectSequence(String backlogId, String projectTaskId) {
+    public Optional<ProjectTask> findPTByProjectSequence(String backlogId, String projectTaskId, String username) {
 
         //make sure we are searching on the right backlog
-        Optional<Backlog> backlog = backlogRepository.findByProjectIdentifier(backlogId);
-        if (backlog.isEmpty()) {
-            throw new ProjectNotFoundException("Project with ID: '" + backlogId + "' does not exist");
-        }
+        // a backlog cannot exist without a project - so instead of finding the backlog, lets find the project
+        // validate
+        projectService.findProjectByIdentifier(backlogId, username);
+
 
         //make sure that our task exists
         Optional<ProjectTask> projectTask = projectTaskRepository.findByProjectSequence(projectTaskId);
@@ -106,15 +95,15 @@ public class ProjectTaskService {
         return projectTask;
     }
 
-    public ProjectTask updateByProjectSequence(ProjectTask updatedTask, String backlogId, String projectTaskId) {
+    public ProjectTask updateByProjectSequence(ProjectTask updatedTask, String backlogId, String projectTaskId, String username) {
         //used for validating only
-        findPTByProjectSequence(backlogId, projectTaskId);
+        findPTByProjectSequence(backlogId, projectTaskId, username);
 //Todo this is super wrong - if we say passed null - it will overwrite it
         return projectTaskRepository.save(updatedTask);
     }
 
-    public void deletePTByProjectSequence(String backlogId, String projectTaskId) {
-        Optional<ProjectTask> projectTask = findPTByProjectSequence(backlogId, projectTaskId);
+    public void deletePTByProjectSequence(String backlogId, String projectTaskId, String username) {
+        Optional<ProjectTask> projectTask = findPTByProjectSequence(backlogId, projectTaskId, username);
 
         projectTask.ifPresent(projectTaskRepository::delete);
     }

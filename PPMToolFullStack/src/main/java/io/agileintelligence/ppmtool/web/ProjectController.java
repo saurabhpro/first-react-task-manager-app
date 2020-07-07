@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.security.Principal;
+import java.util.List;
 
 /*this allows url from some other server to be allowed*/
 @CrossOrigin
@@ -31,7 +33,7 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createNewProject(@Validated @RequestBody Project project, BindingResult result) {
+    public ResponseEntity<Project> createNewProject(@Validated @RequestBody Project project, BindingResult result, Principal currentLoggedInUser) {
 
         mapValidationErrorComponent.mapValidationErrors(result);
 
@@ -46,7 +48,7 @@ public class ProjectController {
             project.setBacklog(backlogRepository.findByProjectIdentifier(project.getProjectIdentifier().toUpperCase()).orElse(null));
         }
 
-        Project project1 = projectService.saveOrUpdateProject(project);
+        Project project1 = projectService.saveOrUpdateProject(project, currentLoggedInUser.getName());
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -58,21 +60,21 @@ public class ProjectController {
 
 
     @GetMapping("/{projectId}")
-    public ResponseEntity<Project> getProjectById(@PathVariable String projectId) {
+    public ResponseEntity<Project> getProjectById(@PathVariable String projectId, Principal currentLoggedInUser) {
 
-        Project project = projectService.findProjectByIdentifier(projectId);
+        Project project = projectService.findProjectByIdentifier(projectId, currentLoggedInUser.getName());
 
         return ResponseEntity.ok(project);
     }
 
     @GetMapping
-    public Iterable<Project> getAllProjects() {
-        return projectService.findAllProjects();
+    public List<Project> getAllProjects(Principal currentLoggedInUser) {
+        return projectService.findAllProjects(currentLoggedInUser.getName());
     }
 
     @DeleteMapping("/{projectId}")
-    public ResponseEntity<Object> deleteProject(@PathVariable String projectId) {
-        projectService.deleteProjectByIdentifier(projectId);
+    public ResponseEntity<Object> deleteProject(@PathVariable String projectId, Principal currentLoggedInUser) {
+        projectService.deleteProjectByIdentifier(projectId, currentLoggedInUser.getName());
 
         return ResponseEntity.ok("Project with ID: '" + projectId + "' was deleted");
     }

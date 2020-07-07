@@ -1,14 +1,14 @@
 package io.agileintelligence.ppmtool.repositories;
 
 import io.agileintelligence.ppmtool.domain.Project;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ProjectRepository extends CrudRepository<Project, Long> {
+import java.util.List;
 
+@Repository
+public interface ProjectRepository extends JpaRepository<Project, Long> {
     Project findByProjectIdentifier(String projectId);
 
-    @Override
-    Iterable<Project> findAll();
+    List<Project> findAllByProjectLeader(String username);
 }
