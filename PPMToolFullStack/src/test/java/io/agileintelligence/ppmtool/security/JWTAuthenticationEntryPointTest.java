@@ -9,7 +9,7 @@ class JWTAuthenticationEntryPointTest {
 
     @Test
     void getLoginJSONResponse() {
-        String actual = jwtAuthenticationEntryPoint.getLoginJSONResponse();
+        String actual = jwtAuthenticationEntryPoint.getInvalidLoginJSONResponse();
         Assertions.assertEquals("{\"username\":\"Invalid Username\",\"password\":\"Invalid Password\"}", actual);
     }
 }
