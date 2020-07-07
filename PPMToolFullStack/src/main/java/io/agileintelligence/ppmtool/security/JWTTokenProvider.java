@@ -53,30 +53,30 @@ public class JWTTokenProvider {
 
 
     //Validate the token
-    public boolean validateAuthToken(final String token) {
+    public Claims validateAuthToken(final String token) {
         try {
             // just parsing correctly means its valid
-            getClaimsFromAuthToken(token);
-            return true;
+            return getClaimsFromAuthToken(token);
         } catch (SignatureException sEx) {
             log.error("JWT Signature Invalid");
+            throw  sEx;
         } catch (MalformedJwtException mEx) {
             log.error("Invalid JWT token");
+            throw mEx;
         } catch (ExpiredJwtException eEx) {
             log.error("Expired JWT Token");
+            throw eEx;
         } catch (UnsupportedJwtException uEx) {
             log.error("Unsupported JWT token");
+            throw uEx;
         } catch (IllegalArgumentException iEx) {
             log.error("JWT claims string is empty");
+            throw iEx;
         }
-
-        return false;
     }
 
     //Get user Id from token
-    public Long getUserIdFromAuthToken(String token) {
-        Claims claims = getClaimsFromAuthToken(token);
-
+    public Long getUserIdFromAuthToken(Claims claims) {
         String id = (String) claims.get("id");
 
         return Long.parseLong(id);

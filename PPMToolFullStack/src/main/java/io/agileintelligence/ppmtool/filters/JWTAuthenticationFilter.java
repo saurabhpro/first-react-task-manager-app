@@ -3,6 +3,10 @@ package io.agileintelligence.ppmtool.filters;
 import io.agileintelligence.ppmtool.domain.User;
 import io.agileintelligence.ppmtool.security.JWTTokenProvider;
 import io.agileintelligence.ppmtool.services.CustomUserDetailsService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,56 +33,76 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private CustomUserDetailsService customUserDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest,
-                                    HttpServletResponse httpServletResponse,
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
         try {
-            String jwt = getJWTFromRequest(httpServletRequest);
+            if (checkJWTToken(request)) {
+                String jwt = getJWTFromRequest(request);
+                Claims claims = tokenProvider.validateAuthToken(jwt);
 
-            if (StringUtils.hasText(jwt) && tokenProvider.validateAuthToken(jwt)) {
-
-                Long userId = tokenProvider.getUserIdFromAuthToken(jwt);
-
-                // call userDetails service
-                User userDetails = customUserDetailsService.loadUserById(userId);
-
-                // authentication info
-                final var authentication = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        Collections.emptyList()
-                );
-
-                // add authentication session and remote address in authentication details
-                authentication.setDetails(
-                        new WebAuthenticationDetailsSource()
-                                .buildDetails(httpServletRequest)
-                );
-
-                // add in context - the verified authentication
-                SecurityContextHolder.getContext()
-                        .setAuthentication(authentication);
-
+                if (claims.get("id") != null) {
+                    setUpSpringAuthentication(claims, request);
+                } else {
+                    SecurityContextHolder.clearContext();
+                }
+            } else {
+                SecurityContextHolder.clearContext();
             }
 
-        } catch (Exception ex) {
-            logger.error("Could not set user authentication in security context", ex);
+            filterChain.doFilter(request, response);
+        } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e) {
+            logger.error("Could not set user authentication in security context", e);
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
         }
-
-
-        // TODO responsible for ?
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
+    /**
+     * Authentication method in Spring boot
+     *
+     * @param claims
+     * @param request
+     */
+    private void setUpSpringAuthentication(Claims claims, HttpServletRequest request) {
+        // get user ID
+        final Long userId = tokenProvider.getUserIdFromAuthToken(claims);
+
+        // call userDetails service
+        final User userDetails = customUserDetailsService.loadUserById(userId);
+
+        // authentication info
+        final var authentication = new UsernamePasswordAuthenticationToken(
+                userDetails,
+                null,
+                Collections.emptyList() // authorities/roles
+        );
+
+        // add authentication session and remote address in authentication details
+        authentication.setDetails(
+                new WebAuthenticationDetailsSource()
+                        .buildDetails(request)
+        );
+
+        // add in context - the verified authentication
+        SecurityContextHolder.getContext()
+                .setAuthentication(authentication);
+    }
 
     private String getJWTFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader(HEADER_STRING);
+        final String bearerToken = request.getHeader(HEADER_STRING);
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_TOKEN_PREFIX)) {
             return bearerToken.substring(BEARER_TOKEN_PREFIX.length());
         }
 
-        return null;
+        throw new MalformedJwtException("Authentication Header doesn't have Bearer Token");
     }
+
+    private boolean checkJWTToken(HttpServletRequest request) {
+        final String authenticationHeader = request.getHeader(HEADER_STRING);
+        return authenticationHeader != null && authenticationHeader.startsWith(BEARER_TOKEN_PREFIX);
+    }
+
 }
