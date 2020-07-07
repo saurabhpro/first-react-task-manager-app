@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-import static io.agileintelligence.ppmtool.security.SecurityConstants.TOKEN_PREFIX;
+import static io.agileintelligence.ppmtool.security.SecurityConstants.BEARER_TOKEN_PREFIX;
 
 @RestController
 @RequestMapping("/api/users")
@@ -66,7 +66,7 @@ public class UserController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        final String jwt = TOKEN_PREFIX + tokenProvider.generateToken(authentication);
+        final String jwt = BEARER_TOKEN_PREFIX + tokenProvider.generateAuthToken(authentication);
 
         return ResponseEntity.ok(new JWTLoginSuccessResponse(true, jwt));
     }
