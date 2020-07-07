@@ -63,6 +63,7 @@ class LoadDatabase {
         return commandLineRunner;
     }
 
+    // have to save it as it is detached object and must exist before projects are creaed
     @Transactional
     public User saveUser(UserService userService, String s2, String s3) {
         User user = new User();
