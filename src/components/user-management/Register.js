@@ -64,82 +64,84 @@ class Register extends Component {
 
     return (
       <div className="register">
-        <Container className="col-md-8 m-auto">
-          <h1 className="display-4 text-center">Sign Up</h1>
-          <p className="lead text-center">Create your Account</p>
-          <Form onSubmit={this.onSubmit}>
-            <FormGroup className="d-flex-fill p-1 text-left">
-              <Form.Control
-                type="text"
-                placeholder="Full Name"
-                name="fullName"
-                size="lg"
-                required
-                value={this.state.fullName}
-                onChange={this.onChange}
-              />
-            </FormGroup>
-            <Form.Group
-              className="d-flex-fill p-1 text-left"
-              controlId="formBasicEmail"
-            >
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                name="username"
-                size="lg"
-                required
-                className={classnames({
-                  "is-invalid": errors.username,
-                })}
-                value={this.state.username}
-                onChange={this.onChange}
-              />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-              <Form.Control.Feedback type="invalid">
-                {errors.username}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <FormGroup>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                name="password"
-                size="lg"
-                required
-                className={classnames({
-                  "is-invalid": errors.password,
-                })}
-                value={this.state.password}
-                onChange={this.onChange}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.password}
-              </Form.Control.Feedback>
-            </FormGroup>
-            <FormGroup>
-              <Form.Control
-                type="password"
-                placeholder="Confirm Password"
-                name="confirmPassword"
-                size="lg"
-                required
-                className={classnames({
-                  "is-invalid": errors.confirmPassword,
-                })}
-                value={this.state.confirmPassword}
-                onChange={this.onChange}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.confirmPassword}
-              </Form.Control.Feedback>
-            </FormGroup>
-            <Button type="submit" variant="info" className="mt-4" block>
-              Submit
-            </Button>
-          </Form>
+        <Container>
+          <div className="col-md-8 m-auto">
+            <h1 className="display-4 text-center">Sign Up</h1>
+            <p className="lead text-center">Create your Account</p>
+            <Form onSubmit={this.onSubmit}>
+              <FormGroup className="d-flex-fill p-1 text-left">
+                <Form.Control
+                  type="text"
+                  placeholder="Full Name"
+                  name="fullName"
+                  size="lg"
+                  required
+                  value={this.state.fullName}
+                  onChange={this.onChange}
+                />
+              </FormGroup>
+              <Form.Group
+                className="d-flex-fill p-1 text-left"
+                controlId="formBasicEmail"
+              >
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email (Username)"
+                  name="username"
+                  size="lg"
+                  required
+                  className={classnames({
+                    "is-invalid": errors.username,
+                  })}
+                  value={this.state.username}
+                  onChange={this.onChange}
+                />
+                <Form.Text className="text-muted">
+                  We'll never share your email with anyone else.
+                </Form.Text>
+                <Form.Control.Feedback type="invalid">
+                  {errors.username}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <FormGroup>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  size="lg"
+                  required
+                  className={classnames({
+                    "is-invalid": errors.password,
+                  })}
+                  value={this.state.password}
+                  onChange={this.onChange}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.password}
+                </Form.Control.Feedback>
+              </FormGroup>
+              <FormGroup>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm Password"
+                  name="confirmPassword"
+                  size="lg"
+                  required
+                  className={classnames({
+                    "is-invalid": errors.confirmPassword,
+                  })}
+                  value={this.state.confirmPassword}
+                  onChange={this.onChange}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.confirmPassword}
+                </Form.Control.Feedback>
+              </FormGroup>
+              <Button type="submit" variant="info" className="mt-4" block>
+                Submit
+              </Button>
+            </Form>
+          </div>
         </Container>
       </div>
     );
