@@ -103,7 +103,7 @@ class Login extends Component {
   }
 }
 
-Login.propType = {
+Login.propTypes = {
   authenticateUser: PropTypes.func.isRequired,
 
   security: PropTypes.object.isRequired,

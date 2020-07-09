@@ -6,43 +6,98 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 
-export default class header extends Component {
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logout } from "../../actions/securityActions";
+
+// get our fontawesome imports
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+class Header extends Component {
+  logout = () => {
+    this.props.logout();
+    window.location.href = "/";
+  };
+
   render() {
+    // get important info from security (token) user
+    const { validToken, user } = this.props.security;
+
+    const userIsAuthenticated = (
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="mr-auto">
+          <Nav.Link href="/dashboard" className="text-light">
+            Dashboard
+          </Nav.Link>
+        </Nav>
+
+        <Nav>
+          <Form inline>
+            <FormControl
+              type="text"
+              placeholder="Search Project"
+              className="mr-sm-1 justify-content-end"
+            />
+            <Button variant="outline-light mr-2"> Search </Button>
+          </Form>
+        </Nav>
+
+        <Nav>
+          {" "}
+          <Navbar.Text className="text-light">
+            <FontAwesomeIcon icon="user-circle" /> {user.fullName}
+          </Navbar.Text>
+          <Nav.Link onClick={this.logout.bind(this)} className="text-light">
+            Logout
+          </Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
+    );
+
+    const userIsNotAuthenticated = (
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="ml-auto">
+          <Nav.Link href="/register" className="text-light">
+            Sign Up
+          </Nav.Link>
+          <Nav.Link href="/login" className="text-light">
+            Login
+          </Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
+    );
+
+    let HeaderLink;
+
+    if (user && validToken) {
+      HeaderLink = userIsAuthenticated;
+    } else {
+      HeaderLink = userIsNotAuthenticated;
+    }
+
     return (
       <>
         <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
-          <Navbar.Brand href="/">First React Task Manager</Navbar.Brand>
+          <Navbar.Brand href="/">
+            <FontAwesomeIcon icon="project-diagram" /> First React Task Manager
+          </Navbar.Brand>
 
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse className="justify-content-end">
-            <Nav className="mr-auto">
-              <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-            </Nav>
 
-            <Nav>
-              <Form inline>
-                <FormControl
-                  type="text"
-                  placeholder="Search"
-                  className="mr-sm-2 justify-content-end"
-                />
-                <Button variant="outline-light">Search</Button>
-              </Form>
-            </Nav>
-            <Nav className="mr-auto">
-              <Nav.Link href="/register">Sign Up</Nav.Link>
-            </Nav>
-            <Nav className="mr-auto">
-            <Nav.Link href="/login">Login</Nav.Link>
-          </Nav>
-            {
-            //   <Navbar.Text>
-            //   Signed in as: <a href="/login">Saurabh Kumar</a>
-            // </Navbar.Text>
-            }
-          </Navbar.Collapse>
+          {HeaderLink}
         </Navbar>
       </>
     );
   }
 }
+
+Header.propTypes = {
+  logout: PropTypes.func.isRequired,
+  security: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  security: state.security,
+});
+
+export default connect(mapStateToProps, { logout })(Header);

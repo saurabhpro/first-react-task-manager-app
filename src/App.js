@@ -13,6 +13,8 @@ import {
   faTasks,
   faPlusSquare,
   faMinusSquare,
+  faUserCircle,
+  faProjectDiagram,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -45,7 +47,9 @@ library.add(
   faMinusSquare,
   faPlusSquare,
   faBackward,
-  faTasks
+  faTasks,
+  faUserCircle,
+  faProjectDiagram
 );
 
 /**
