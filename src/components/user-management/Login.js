@@ -73,7 +73,7 @@ class Login extends Component {
           <div className="col-md-8 m-auto">
             <h1 className="display-4 text-center">Log In</h1>
             <Form onSubmit={this.onSubmit}>
-              <FormGroup>
+              <FormGroup className="d-flex-fill p-1 text-left">
                 <Form.Control
                   type="email"
                   placeholder="Email Address (Username)"
@@ -85,8 +85,11 @@ class Login extends Component {
                   value={this.state.username}
                   onChange={this.onChange}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.username}
+                </Form.Control.Feedback>
               </FormGroup>
-              <FormGroup>
+              <FormGroup className="d-flex-fill p-1 text-left">
                 <Form.Control
                   type="password"
                   placeholder="Password"
@@ -98,6 +101,9 @@ class Login extends Component {
                   value={this.state.password}
                   onChange={this.onChange}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.password}
+                </Form.Control.Feedback>
               </FormGroup>
               <Button type="submit" variant="info" className="mt-4" block>
                 Submit
