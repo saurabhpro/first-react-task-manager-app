@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -37,21 +37,23 @@ public class User implements UserDetails {
     @Transient
     private String confirmPassword;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
     //OneToMany with Project
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
     private List<Project> projects = new ArrayList<>();
 
+    @Column(updatable = false)
+    private Instant createdAt;
+
+    private Instant updatedAt;
+
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = Instant.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
+        this.updatedAt = Instant.now();
     }
 
     /*

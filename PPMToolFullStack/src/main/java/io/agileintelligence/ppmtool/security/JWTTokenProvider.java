@@ -6,8 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,8 +20,9 @@ public class JWTTokenProvider {
     public String generateAuthToken(Authentication authentication) {
         final User user = (User) authentication.getPrincipal();
 
-        final LocalDateTime now = LocalDateTime.now();
-        final LocalDateTime expiryDate = now.plus(SecurityConstants.EXPIRATION_TIME_SECONDS, ChronoUnit.MILLIS);
+        // use instant as it will always return a UTC instant and has much less footprint
+        final Instant now = Instant.now();
+        final Instant expiryDate = now.plus(SecurityConstants.EXPIRATION_TIME_SECONDS, ChronoUnit.SECONDS);
 
         final String userId = String.valueOf(user.getId());
 
@@ -43,9 +43,8 @@ public class JWTTokenProvider {
         return Jwts.builder()
                 .setSubject(userId)
                 .setClaims(claims)
-                .setIssuedAt(Date.from(now.toInstant(ZoneOffset.UTC)))
-                .setExpiration(Date.from(expiryDate.toInstant(ZoneOffset.UTC).
-                        plusSeconds(SecurityConstants.EXPIRATION_TIME_SECONDS))
+                .setIssuedAt(Date.from(now))
+                .setExpiration(Date.from(expiryDate)
                 )
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET) //TODO
                 .compact();

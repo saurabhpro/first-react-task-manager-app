@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -38,12 +38,6 @@ public class Project {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime updatedAt;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
     @JsonIgnore
@@ -55,14 +49,19 @@ public class Project {
 
     private String projectLeader;
 
+    @Column(updatable = false)
+    private Instant createdAt;
+
+    private Instant updatedAt;
+
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = Instant.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
+        this.updatedAt = Instant.now();
     }
 
 }

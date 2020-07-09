@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 
 @Data
@@ -41,17 +41,19 @@ public class ProjectTask {
     @Column(updatable = false)
     private String projectIdentifier;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    @Column(updatable = false)
+    private Instant createdAt;
+
+    private Instant updatedAt;
 
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = Instant.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
+        this.updatedAt = Instant.now();
     }
 
     @Override
