@@ -82,5 +82,12 @@ class Login extends Component {
 
 Login.propType = {
   authenticateUser: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
 };
-export default connect(null, { authenticateUser })(Login);
+
+const mapStateToProps = state => ({
+  security: state.security,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { authenticateUser })(Login);
