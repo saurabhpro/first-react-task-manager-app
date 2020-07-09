@@ -32,9 +32,14 @@ export default class header extends Component {
             <Nav className="mr-auto">
               <Nav.Link href="/register">Sign Up</Nav.Link>
             </Nav>
-            <Navbar.Text>
-              Signed in as: <a href="/login">Saurabh Kumar</a>
-            </Navbar.Text>
+            <Nav className="mr-auto">
+            <Nav.Link href="/login">Login</Nav.Link>
+          </Nav>
+            {
+            //   <Navbar.Text>
+            //   Signed in as: <a href="/login">Saurabh Kumar</a>
+            // </Navbar.Text>
+            }
           </Navbar.Collapse>
         </Navbar>
       </>

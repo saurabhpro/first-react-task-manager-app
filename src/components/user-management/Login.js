@@ -8,6 +8,8 @@ import { connect } from "react-redux";
 import { authenticateUser } from "../../actions/securityActions";
 import PropTypes from "prop-types";
 
+import classnames from "classnames";
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +22,21 @@ class Login extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+
+  // Life Cycle Hooks
+  // https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
+  // https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html (migration)
+
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.security.validToken) {
+      this.props.history.push("/dashboard");
+    }
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+    return null;
+  };
 
   //
   onChange = (event) => {
@@ -41,6 +58,8 @@ class Login extends Component {
   };
 
   render() {
+    const { errors } = this.state;
+
     return (
       <div className="login">
         <Container>
@@ -50,10 +69,12 @@ class Login extends Component {
               <FormGroup>
                 <Form.Control
                   type="email"
-                  className="form-control form-control-lg"
                   placeholder="Email Address (Username)"
                   name="username"
                   required
+                  className={classnames({
+                    "is-invalid": errors.username,
+                  })}
                   value={this.state.username}
                   onChange={this.onChange}
                 />
@@ -61,10 +82,12 @@ class Login extends Component {
               <FormGroup>
                 <Form.Control
                   type="password"
-                  className="form-control form-control-lg"
                   placeholder="Password"
                   name="password"
                   required
+                  className={classnames({
+                    "is-invalid": errors.password,
+                  })}
                   value={this.state.password}
                   onChange={this.onChange}
                 />
@@ -82,12 +105,14 @@ class Login extends Component {
 
 Login.propType = {
   authenticateUser: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+
+  security: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   security: state.security,
-  errors: state.errors
+  errors: state.errors,
 });
 
 export default connect(mapStateToProps, { authenticateUser })(Login);

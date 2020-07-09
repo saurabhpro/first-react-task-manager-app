@@ -29,6 +29,15 @@ import Landing from "./components/layout/Landing";
 import Login from "./components/user-management/Login";
 import Register from "./components/user-management/Register";
 
+import store from "./store/store";
+import jwt_decode from "jwt-decode";
+import SetJWTToken from "./security-untils/SetJWTToken";
+import { SET_CURRENT_USER } from "./actions/types";
+import { logout } from "./actions/securityActions";
+
+import moment from "moment";
+
+//font awesome icons available globally for this project
 library.add(
   faCheckSquare,
   faCoffee,
@@ -39,6 +48,36 @@ library.add(
   faTasks
 );
 
+/**
+ * Usually when you reload a browser the redux state is cleaned
+ * we still have the token in local stoarge - so lets use it
+ */
+const jwtToken = localStorage.jwtToken;
+
+if (jwtToken) {
+  SetJWTToken(jwtToken);
+  const decoded_jwtToken = jwt_decode(jwtToken);
+  store.dispatch({
+    type: SET_CURRENT_USER,
+    payload: decoded_jwtToken,
+  });
+
+  const currentTime = moment().unix();
+  // exp is expiration time
+  if (decoded_jwtToken.exp < currentTime) {
+    console.log("JWT Token expired - logging out...");
+
+    //handle logout
+    store.dispatch(logout());
+
+    //redirect to
+    window.location.href = "/";
+  }
+}
+
+/**
+ * Main App class
+ */
 function App() {
   return (
     <Provider store={appStore}>
