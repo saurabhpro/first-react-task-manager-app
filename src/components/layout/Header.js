@@ -11,12 +11,11 @@ export default class header extends Component {
     return (
       <>
         <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
-          <Navbar.Brand href="#home">First React Task Manager</Navbar.Brand>
+          <Navbar.Brand href="/">First React Task Manager</Navbar.Brand>
 
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse className="justify-content-end">
             <Nav className="mr-auto">
-              <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/dashboard">Dashboard</Nav.Link>
             </Nav>
 
@@ -30,8 +29,11 @@ export default class header extends Component {
                 <Button variant="outline-light">Search</Button>
               </Form>
             </Nav>
+            <Nav className="mr-auto">
+              <Nav.Link href="/register">Sign Up</Nav.Link>
+            </Nav>
             <Navbar.Text>
-              Signed in as: <a href="#login">Saurabh Kumar</a>
+              Signed in as: <a href="/login">Saurabh Kumar</a>
             </Navbar.Text>
           </Navbar.Collapse>
         </Navbar>

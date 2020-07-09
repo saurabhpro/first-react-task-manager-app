@@ -25,6 +25,9 @@ import NotFoundPage from "./components/not-found/NotFoundPage";
 import ProjectBoard from "./components/project-board/ProjectBoard";
 import AddProjectTask from "./components/project-board/project-task/AddProjectTask";
 import UpdateProjectTask from "./components/project-board/project-task/UpdateProjectTask";
+import Landing from "./components/layout/Landing";
+import Login from "./components/user-management/Login";
+import Register from "./components/user-management/Register";
 
 library.add(
   faCheckSquare,
@@ -49,7 +52,15 @@ function App() {
           }
           <Header />
           <Switch>
-            <Route exact path="/" component={Dashboard} />
+            {
+              //public routes
+            }
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+            {
+              //private routes
+            }
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/addProject" component={AddProject} />
             <Route exact path="/updateProject/:id" component={UpdateProject} />
