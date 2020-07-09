@@ -26,6 +26,11 @@ class Register extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+
+    //component did mount stuff
+    if (this.props.security.validToken) {
+      this.props.history.push("/dashboard");
+    }
   }
 
   // Life Cycle Hooks
@@ -157,9 +162,11 @@ class Register extends Component {
 Register.propTypes = {
   createNewUser: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
+  security: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
+  security: state.security,
   errors: state.errors,
 });
 

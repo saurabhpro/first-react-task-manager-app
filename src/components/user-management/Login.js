@@ -21,6 +21,11 @@ class Login extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+
+    // componentdidmount stuff is basically this place in contructor
+    if (this.props.security.validToken) {
+      this.props.history.push("/dashboard");
+    }
   }
 
   // Life Cycle Hooks
@@ -37,6 +42,8 @@ class Login extends Component {
     }
     return null;
   };
+
+  componentDidMount() {}
 
   //
   onChange = (event) => {
