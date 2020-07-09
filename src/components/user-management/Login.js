@@ -3,22 +3,59 @@ import FormGroup from "react-bootstrap/FormGroup";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { connect } from "react-redux";
+
+import { authenticateUser } from "../../actions/securityActions";
+import PropTypes from "prop-types";
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      username: "",
+      password: "",
+      errors: {},
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  //
+  onChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  onSubmit = (event) => {
+    // prevents screen refresh once this event ends
+    event.preventDefault();
+    const loginUser = {
+      username: this.state.username,
+      password: this.state.password,
+    };
+
+    this.props.authenticateUser(loginUser, this.props.history);
+
+    //log for test
+    console.log(loginUser);
+  };
+
   render() {
     return (
       <div className="login">
         <Container>
           <div className="col-md-8 m-auto">
             <h1 className="display-4 text-center">Log In</h1>
-            <Form>
+            <Form onSubmit={this.onSubmit}>
               <FormGroup>
                 <Form.Control
                   type="email"
                   className="form-control form-control-lg"
                   placeholder="Email Address (Username)"
-                  name="email"
+                  name="username"
                   required
+                  value={this.state.username}
+                  onChange={this.onChange}
                 />
               </FormGroup>
               <FormGroup>
@@ -28,6 +65,8 @@ class Login extends Component {
                   placeholder="Password"
                   name="password"
                   required
+                  value={this.state.password}
+                  onChange={this.onChange}
                 />
               </FormGroup>
               <Button type="submit" variant="info" className="mt-4" block>
@@ -41,4 +80,7 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propType = {
+  authenticateUser: PropTypes.func.isRequired,
+};
+export default connect(null, { authenticateUser })(Login);

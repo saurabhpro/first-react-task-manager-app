@@ -76,9 +76,15 @@ class Register extends Component {
                   name="fullName"
                   size="lg"
                   required
+                  className={classnames({
+                    "is-invalid": errors.username,
+                  })}
                   value={this.state.fullName}
                   onChange={this.onChange}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.fullName}
+                </Form.Control.Feedback>
               </FormGroup>
               <Form.Group
                 className="d-flex-fill p-1 text-left"
