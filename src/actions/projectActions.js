@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { GET_ERRORS, GET_PROJECTS, GET_PROJECT, DELETE_PROJECT } from "./types";
 
-const baseURL = "http://localhost:8080";
+//const baseURL = "http://localhost:8080";
 
 /**
  * history -> helps redirect once form is submitted
@@ -11,7 +11,7 @@ const baseURL = "http://localhost:8080";
  * */
 export const createProject = (project, history) => async (dispatch) => {
   try {
-    const serverResponse = await axios.post(baseURL+ "/api/projects", project);
+    const serverResponse = await axios.post("/api/projects", project);
     console.debug(serverResponse);
 
     //redirect to this route with props set (visible in redux debug tool)
@@ -32,7 +32,7 @@ export const createProject = (project, history) => async (dispatch) => {
 };
 
 export const getProjects = () => async (dispatch) => {
-  const serverResponse = await axios.get(baseURL+ "/api/projects");
+  const serverResponse = await axios.get("/api/projects");
   console.debug(serverResponse);
 
   dispatch({
@@ -43,7 +43,7 @@ export const getProjects = () => async (dispatch) => {
 
 export const getProject = (id, history) => async (dispatch) => {
   try {
-    const serverResponse = await axios.get(baseURL+ `/api/projects/${id}`);
+    const serverResponse = await axios.get(`/api/projects/${id}`);
     console.debug(serverResponse);
 
     dispatch({
@@ -57,11 +57,11 @@ export const getProject = (id, history) => async (dispatch) => {
 
 export const deleteProject = (id, history) => async (dispatch) => {
   if (window.confirm("Are you sure you want to delete?")) {
-      await axios.delete(baseURL+ `/api/projects/${id}`);
+    await axios.delete(`/api/projects/${id}`);
 
-      dispatch({
-        type: DELETE_PROJECT,
-        payload: id,
-      });
+    dispatch({
+      type: DELETE_PROJECT,
+      payload: id,
+    });
   }
 };

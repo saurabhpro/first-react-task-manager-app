@@ -7,14 +7,14 @@ import {
   DELETE_PROJECT_TASK,
 } from "./types";
 
-const baseURL = "http://localhost:8080";
+//const baseURL = "http://localhost:8080";
 
 export const addProjectTask = (backlogId, projectTask, history) => async (
   dispatch
 ) => {
   try {
     const serverResponse = await axios.post(
-      baseURL + `/api/projects/${backlogId}/backlog`,
+      `/api/projects/${backlogId}/backlog`,
       projectTask
     );
 
@@ -39,7 +39,7 @@ export const addProjectTask = (backlogId, projectTask, history) => async (
 export const getBacklog = (backlogId) => async (dispatch) => {
   try {
     const serverResponse = await axios.get(
-      baseURL + `/api/projects/${backlogId}/backlog/`
+      `/api/projects/${backlogId}/backlog/`
     );
     console.debug(serverResponse);
 
@@ -61,7 +61,7 @@ export const getProjectTask = (backlogId, projectTaskId, history) => async (
 ) => {
   try {
     const serverResponse = await axios.get(
-      baseURL + `/api/backlogs/${backlogId}/tasks/${projectTaskId}`
+      `/api/backlogs/${backlogId}/tasks/${projectTaskId}`
     );
     console.debug(serverResponse);
 
