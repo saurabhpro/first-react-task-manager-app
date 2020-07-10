@@ -1,11 +1,17 @@
 import React, { Component } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import { Link } from "react-router-dom";
 
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+// bootstrap
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+
+/**
+ * The default page we first come when an unauthenticated user reches 
+ * - can be prettified as it shows two unnecesary button SignUp and Login
+ */
 class Landing extends Component {
   componentDidMount() {
     if (this.props.security.validToken) {

@@ -9,6 +9,7 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import FormGroup from "react-bootstrap/FormGroup";
 import Button from "react-bootstrap/Button";
+import { Row, Col } from "react-bootstrap";
 
 class Register extends Component {
   constructor(props) {
@@ -64,17 +65,24 @@ class Register extends Component {
     //log for test
     console.log(newUser);
   };
+
   render() {
     const { errors } = this.state;
 
     return (
-      <div className="register">
-        <Container>
-          <div className="col-md-8 m-auto">
-            <h1 className="display-4 text-center">Sign Up</h1>
-            <p className="lead text-center">Create your Account</p>
+      <Container fluid="md">
+        <Row lg className="justify-content-md-center">
+          <h1 className="display-4 text-center">Sign Up</h1>
+        </Row>
+        <Row lg className="justify-content-md-center">
+          <p className="lead text-center">Create your Account</p>
+        </Row>
+
+        <Row className="justify-content-md-center">
+          <Col lg={6}>
+          
             <Form onSubmit={this.onSubmit}>
-              <FormGroup className="d-flex-fill p-1 text-left">
+              <FormGroup className="p-1">
                 <Form.Control
                   type="text"
                   placeholder="Full Name"
@@ -91,13 +99,14 @@ class Register extends Component {
                   {errors.fullName}
                 </Form.Control.Feedback>
               </FormGroup>
+
               <Form.Group
-                className="d-flex-fill p-1 text-left"
+                className="p-1 text-left"
                 controlId="formBasicEmail"
               >
                 <Form.Control
                   type="email"
-                  placeholder="Enter email (Username)"
+                  placeholder="Email Address (Username)"
                   name="username"
                   size="lg"
                   required
@@ -114,7 +123,8 @@ class Register extends Component {
                   {errors.username}
                 </Form.Control.Feedback>
               </Form.Group>
-              <FormGroup>
+
+              <FormGroup className="p-1">
                 <Form.Control
                   type="password"
                   placeholder="Password"
@@ -131,7 +141,8 @@ class Register extends Component {
                   {errors.password}
                 </Form.Control.Feedback>
               </FormGroup>
-              <FormGroup>
+
+              <FormGroup className="p-1">
                 <Form.Control
                   type="password"
                   placeholder="Confirm Password"
@@ -148,13 +159,14 @@ class Register extends Component {
                   {errors.confirmPassword}
                 </Form.Control.Feedback>
               </FormGroup>
+
               <Button type="submit" variant="info" className="mt-4" block>
                 Submit
               </Button>
             </Form>
-          </div>
-        </Container>
-      </div>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
@@ -162,7 +174,7 @@ class Register extends Component {
 Register.propTypes = {
   createNewUser: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  security: PropTypes.object.isRequired
+  security: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

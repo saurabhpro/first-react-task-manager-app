@@ -1,15 +1,20 @@
 import React, { Component } from "react";
+
 import FormGroup from "react-bootstrap/FormGroup";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { connect } from "react-redux";
-
-import { authenticateUser } from "../../actions/securityActions";
-import PropTypes from "prop-types";
+import { Row, Col } from "react-bootstrap";
 
 import classnames from "classnames";
 
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { authenticateUser } from "../../actions/securityActions";
+
+/**
+ * Simple login page component
+ */
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +27,7 @@ class Login extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
-    // componentdidmount stuff is basically this place in contructor
+    // componentDidMount stuff is basically this place in constructor
     if (this.props.security.validToken) {
       this.props.history.push("/dashboard");
     }
@@ -45,7 +50,6 @@ class Login extends Component {
 
   componentDidMount() {}
 
-  //
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -68,12 +72,16 @@ class Login extends Component {
     const { errors } = this.state;
 
     return (
-      <div className="login">
-        <Container>
-          <div className="col-md-8 m-auto">
-            <h1 className="display-4 text-center">Log In</h1>
+      <Container fluid="md">
+        <Row className="justify-content-md-center">
+          <h1 className="display-4 text-center">Log In</h1>
+        </Row>
+
+        <Row xl className="justify-content-md-center">
+          <Col lg={6}>
+          
             <Form onSubmit={this.onSubmit}>
-              <FormGroup className="d-flex-fill p-1 text-left">
+              <FormGroup className="p-1 text-left">
                 <Form.Control
                   type="email"
                   placeholder="Email Address (Username)"
@@ -82,6 +90,7 @@ class Login extends Component {
                   className={classnames({
                     "is-invalid": errors.username,
                   })}
+                  size="lg"
                   value={this.state.username}
                   onChange={this.onChange}
                 />
@@ -89,7 +98,8 @@ class Login extends Component {
                   {errors.username}
                 </Form.Control.Feedback>
               </FormGroup>
-              <FormGroup className="d-flex-fill p-1 text-left">
+
+              <FormGroup className="p-1 text-left">
                 <Form.Control
                   type="password"
                   placeholder="Password"
@@ -98,6 +108,7 @@ class Login extends Component {
                   className={classnames({
                     "is-invalid": errors.password,
                   })}
+                  size="lg"
                   value={this.state.password}
                   onChange={this.onChange}
                 />
@@ -105,13 +116,14 @@ class Login extends Component {
                   {errors.password}
                 </Form.Control.Feedback>
               </FormGroup>
+
               <Button type="submit" variant="info" className="mt-4" block>
                 Submit
               </Button>
             </Form>
-          </div>
-        </Container>
-      </div>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

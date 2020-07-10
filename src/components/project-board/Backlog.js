@@ -15,9 +15,18 @@ class Backlog extends Component {
       projectTasksProp
     );
 
+    const styles1 = {
+      margin: '20px',
+      width: '250px',
+      height: '250px',
+      backgroundColor: 'yellow',
+      display: 'inline-block',
+    };
+
     return (
+      
       <CardDeck>
-        <Card bg="dark" text="white" className="text-center p-2">
+        <Card bg="dark" text="white" className="text-center p-2 ">
           <Card.Header as="h5" className="mb-2">
             TO DO
           </Card.Header>
@@ -28,7 +37,8 @@ class Backlog extends Component {
           md={{ offset: 1 }}
           bg="warning"
           text="light"
-          className="text-center p-2"
+          className="text-center p-2 card-transparent"
+          
         >
           <Card.Header as="h5" className="mb-2">
             In Progress
@@ -36,7 +46,7 @@ class Backlog extends Component {
           {inProgressItems}
         </Card>
 
-        <Card bg="success" text="light" className="text-center p-2">
+        <Card bg="success" text="light" className="text-center p-2  card-transparent">
           <Card.Header as="h5" className="mb-2">
             Done
           </Card.Header>

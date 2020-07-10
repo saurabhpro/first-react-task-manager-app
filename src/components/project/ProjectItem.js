@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
@@ -8,12 +9,10 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 // get our fontawesome imports
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Link } from "react-router-dom";
-
-import PropTypes from "prop-types";
-
-import { connect } from "react-redux";
 import { deleteProject } from "../../actions/projectActions";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 class ProjectItem extends Component {
   onDeleteClick = (id) => {
@@ -22,53 +21,56 @@ class ProjectItem extends Component {
 
   render() {
     const { project } = this.props;
-    console.log(this.props);
     return (
-      <Container className="bg-light mb-3">
-        <Row>
-          <div className="col-2">
-            <span className="mx-auto">{project.projectIdentifier}</span>
-          </div>
+      <Container className="mb-4">
+        <Card>
+          <Row className="bg-dark text-left">
+            <Col className="text-light  ml-4">
+              <span className="mx-auto">{project.projectIdentifier}</span>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={8} className="text-left ml-4">
+              <h3>{project.projectName}</h3>
+              <p>{project.description}</p>
+            </Col>
 
-          <div className="col-lg-6 col-md-4 col-8">
-            <h3>{project.projectName}</h3>
-            <p>{project.description}</p>
-          </div>
+            <Card border="light" className="ml-5 justify-content-center">
+              <ButtonGroup vertical>
+                <Link
+                  to={`/projectBoard/${project.projectIdentifier}`}
+                  className="btn-block"
+                >
+                  <Button variant="outline-primary" block className="mb-1">
+                    <div className="float-left">
+                      <FontAwesomeIcon icon="tasks" /> Project Board
+                    </div>
+                  </Button>
+                </Link>
 
-          <Card>
-            <ButtonGroup vertical>
-              <Link
-                to={`/projectBoard/${project.projectIdentifier}`}
-                className="btn-block"
-              >
-                <Button variant="outline-primary" block className="mb-1">
-                  <div className="float-left">
-                    <FontAwesomeIcon icon="tasks" /> Project Board
-                  </div>
-                </Button>
-              </Link>
-              <Link to={`/updateProject/${project.projectIdentifier}`}>
-                <Button variant="outline-info" block className="mb-1">
-                  <div className="float-left">
-                    <FontAwesomeIcon icon="edit" /> Update Project Info
-                  </div>
-                </Button>
-              </Link>
-              <Button
-                variant="outline-danger"
-                block
-                onClick={this.onDeleteClick.bind(
-                  this,
-                  project.projectIdentifier
-                )}
-              >
-                <div className="float-left">
+                <Link to={`/updateProject/${project.projectIdentifier}`}>
+                  <Button variant="outline-success" block className="mb-1">
+                    <div className="float-left">
+                      <FontAwesomeIcon icon="edit" /> Update Project Info
+                    </div>
+                  </Button>
+                </Link>
+
+                <Button
+                  className="text-left"
+                  variant="outline-danger"
+                  block
+                  onClick={this.onDeleteClick.bind(
+                    this,
+                    project.projectIdentifier
+                  )}
+                >
                   <FontAwesomeIcon icon="minus-square" /> Delete Project
-                </div>
-              </Button>
-            </ButtonGroup>
-          </Card>
-        </Row>
+                </Button>
+              </ButtonGroup>
+            </Card>
+          </Row>
+        </Card>
       </Container>
     );
   }

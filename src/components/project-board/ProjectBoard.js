@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 
 import Container from "react-bootstrap/Container";
-import { Link } from "react-router-dom";
-
 import Button from "react-bootstrap/Button";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Backlog from "./Backlog";
 
+import Backlog from "./Backlog";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getBacklog } from "../../actions/backlogActions";

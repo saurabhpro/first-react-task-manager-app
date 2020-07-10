@@ -1,18 +1,22 @@
 import React, { Component } from "react";
 
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logout } from "../../actions/securityActions";
+
+// BootStrap
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { logout } from "../../actions/securityActions";
-
-// get our fontawesome imports
+// FontAwesome imports
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+/**
+ * class to get the nice looking banner at the top
+ * - this also contains dynamic buttons based on when a user is logged in
+ */
 class Header extends Component {
   logout = () => {
     this.props.logout();

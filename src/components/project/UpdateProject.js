@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import Container from "react-bootstrap/Container";
+import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
@@ -100,84 +101,94 @@ class UpdateProject extends Component {
     } = this.state;
 
     return (
-      <Container className="p-2 flex-fill justify-content-center">
-        <div className="col-md-8 m-auto">
+      <Container fluid className="p-2 flex-fill justify-content-center">
+        <Row className="justify-content-md-center">
           <h5 className="display-4 ">Update Project Form</h5>
-          <hr />
+        </Row>
+        <hr />
 
-          {
-            // for with onSubmit Action - this.onSubmit can have any arbitary name too like onSave etc
-          }
-          <Form onSubmit={this.onSubmit} className="d-flex-fill p-1 text-left">
-            <Form.Group controlId="formProjectName">
-              <Form.Label>Project Name</Form.Label>
-              <Form.Control
-                as="input"
-                required
-                placeholder="Project Name"
-                name="projectName"
-                className={classnames({
-                  "is-invalid": errors.projectName,
-                })}
-                value={projectName}
-                onChange={this.onChange}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.projectName}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formProjectIdentifier">
-              <Form.Label>Project Unique Identifier</Form.Label>
-              <Form.Control
-                as="input"
-                required
-                disabled
-                placeholder="Project Unique Identifier"
-                name="projectIdentifier"
-                value={projectIdentifier}
-                onChange={this.onChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formProjectDescription">
-              <Form.Label>Project Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                required
-                placeholder="Project Description"
-                name="description"
-                className={classnames({
-                  "is-invalid": errors.description,
-                })}
-                value={description}
-                onChange={this.onChange}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.description}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formStartDate">
-              <Form.Label>Start Date</Form.Label>
-              <Form.Control
-                type="date"
-                name="startDate"
-                value={startDate}
-                onChange={this.onChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formEndDate">
-              <Form.Label>Estimated End Date</Form.Label>
-              <Form.Control
-                type="date"
-                name="endDate"
-                value={endDate}
-                onChange={this.onChange}
-              />
-            </Form.Group>
-            <Button type="submit" block>
-              Update
-            </Button>
-          </Form>
-        </div>
+        <Row className="justify-content-md-center">
+          {" "}
+          <Col lg={6}>
+            {
+              // for with onSubmit Action - this.onSubmit can have any arbitary name too like onSave etc
+            }
+            <Form onSubmit={this.onSubmit} className="p-1 text-left">
+              <Form.Group controlId="formProjectName">
+                <Form.Label>Project Name</Form.Label>
+                <Form.Control
+                  as="input"
+                  required
+                  placeholder="Project Name"
+                  name="projectName"
+                  className={classnames({
+                    "is-invalid": errors.projectName,
+                  })}
+                  value={projectName}
+                  onChange={this.onChange}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.projectName}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group controlId="formProjectIdentifier">
+                <Form.Label>Project Unique Identifier</Form.Label>
+                <Form.Control
+                  as="input"
+                  required
+                  disabled
+                  placeholder="Project Unique Identifier"
+                  name="projectIdentifier"
+                  value={projectIdentifier}
+                  onChange={this.onChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formProjectDescription">
+                <Form.Label>Project Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  required
+                  placeholder="Project Description"
+                  name="description"
+                  className={classnames({
+                    "is-invalid": errors.description,
+                  })}
+                  value={description}
+                  onChange={this.onChange}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.description}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group controlId="formStartDate">
+                <Form.Label>Start Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="startDate"
+                  value={startDate}
+                  onChange={this.onChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formEndDate">
+                <Form.Label>Estimated End Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="endDate"
+                  value={endDate}
+                  onChange={this.onChange}
+                />
+              </Form.Group>
+
+              <Button type="submit" block>
+                Update
+              </Button>
+            </Form>
+          </Col>
+        </Row>
       </Container>
     );
   }

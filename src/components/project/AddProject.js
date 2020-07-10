@@ -4,12 +4,16 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
+import classnames from "classnames";
+
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProject } from "../../actions/projectActions";
+import { Row, Col } from "react-bootstrap";
 
-import classnames from "classnames";
-
+/**
+ * the create new project form with all validations
+ */
 class AddProject extends Component {
   constructor() {
     super();
@@ -44,6 +48,7 @@ class AddProject extends Component {
     // then setState
     this.setState({ [event.target.name]: event.target.value });
   };
+
   onSubmit = (event) => {
     // prevents screen refresh once this event ends
     event.preventDefault();
@@ -66,89 +71,101 @@ class AddProject extends Component {
 
     return (
       <Container fluid className="p-2 flex-fill justify-content-center">
-        <div className="col-md-8 m-auto">
+        <Row className="justify-content-md-center">
           <h5 className="display-4 ">Create Project form</h5>
-          <hr />
+        </Row>
+        <hr />
+        <Row className="justify-content-md-center">
+          {" "}
+          <Col lg={6}>
+            {
+              // for with onSubmit Action - this.onSubmit can have any arbitary name too like onSave etc
+            }
+            <Form
+              onSubmit={this.onSubmit}
+              className="d-flex-fill p-1 text-left"
+            >
+              <Form.Group controlId="formProjectName">
+                <Form.Label>Project Name</Form.Label>
+                <Form.Control
+                  as="input"
+                  required
+                  placeholder="Project Name"
+                  name="projectName"
+                  className={classnames({
+                    "is-invalid": errors.projectName,
+                  })}
+                  value={this.state.projectName}
+                  onChange={this.onChange}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.projectName}
+                </Form.Control.Feedback>
+              </Form.Group>
 
-          {
-            // for with onSubmit Action - this.onSubmit can have any arbitary name too like onSave etc
-          }
-          <Form onSubmit={this.onSubmit} className="d-flex-fill p-1 text-left">
-            <Form.Group controlId="formProjectName">
-              <Form.Label>Project Name</Form.Label>
-              <Form.Control
-                as="input"
-                required
-                placeholder="Project Name"
-                name="projectName"
-                className={classnames({
-                  "is-invalid": errors.projectName,
-                })}
-                value={this.state.projectName}
-                onChange={this.onChange}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.projectName}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formProjectIdentifier">
-              <Form.Label>Project Unique Identifier</Form.Label>
-              <Form.Control
-                as="input"
-                required
-                //disabled
-                placeholder="Project Unique Identifier"
-                name="projectIdentifier"
-                className={classnames({
-                  "is-invalid": errors.projectIdentifier,
-                })}
-                value={this.state.projectIdentifier}
-                onChange={this.onChange}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.projectIdentifier}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formProjectDescription">
-              <Form.Label>Project Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                required
-                placeholder="Project Description"
-                name="description"
-                className={classnames({
-                  "is-invalid": errors.description,
-                })}
-                value={this.state.description}
-                onChange={this.onChange}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.description}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formStartDate">
-              <Form.Label>Start Date</Form.Label>
-              <Form.Control
-                type="date"
-                name="startDate"
-                value={this.state.startDate}
-                onChange={this.onChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formEndDate">
-              <Form.Label>Estimated End Date</Form.Label>
-              <Form.Control
-                type="date"
-                name="endDate"
-                value={this.state.endDate}
-                onChange={this.onChange}
-              />
-            </Form.Group>
-            <Button type="submit" block>
-              Submit
-            </Button>
-          </Form>
-        </div>
+              <Form.Group controlId="formProjectIdentifier">
+                <Form.Label>Project Unique Identifier</Form.Label>
+                <Form.Control
+                  as="input"
+                  required
+                  //disabled
+                  placeholder="Project Unique Identifier"
+                  name="projectIdentifier"
+                  className={classnames({
+                    "is-invalid": errors.projectIdentifier,
+                  })}
+                  value={this.state.projectIdentifier}
+                  onChange={this.onChange}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.projectIdentifier}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group controlId="formProjectDescription">
+                <Form.Label>Project Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  required
+                  placeholder="Project Description"
+                  name="description"
+                  className={classnames({
+                    "is-invalid": errors.description,
+                  })}
+                  value={this.state.description}
+                  onChange={this.onChange}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.description}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group controlId="formStartDate">
+                <Form.Label>Start Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="startDate"
+                  value={this.state.startDate}
+                  onChange={this.onChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formEndDate">
+                <Form.Label>Estimated End Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="endDate"
+                  value={this.state.endDate}
+                  onChange={this.onChange}
+                />
+              </Form.Group>
+              
+              <Button type="submit" block>
+                Submit
+              </Button>
+            </Form>
+          </Col>
+        </Row>
       </Container>
     );
   }

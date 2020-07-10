@@ -1,7 +1,7 @@
 import axios from "axios";
 import { GET_ERRORS, SET_CURRENT_USER } from "./types";
-import SetJWTToken from "../security-untils/SetJWTToken";
 
+import SetJWTToken from "../security-untils/SetJWTToken";
 import jwt_decode from "jwt-decode";
 
 //const baseURL = "http://localhost:8080";

@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
-import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Form from "react-bootstrap/Form";
 
 import classnames from "classnames";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   getProjectTask,
   updateProjectTask,
 } from "../../../actions/backlogActions";
+import { Row, Col } from "react-bootstrap";
 
 class UpdateProjectTask extends Component {
   constructor() {
@@ -100,8 +102,8 @@ class UpdateProjectTask extends Component {
   render() {
     const { errors } = this.state;
     return (
-      <Container fluid className="p-2 flex-fill justify-content-center">
-        <div className="col-md-8 m-auto">
+      <Container fluid className="flex-fill justify-content-center">
+        <Row className="justify-content-md-left">
           <Link
             to={`/projectBoard/${this.state.projectIdentifier}`}
             className="mb-3"
@@ -110,87 +112,100 @@ class UpdateProjectTask extends Component {
               <FontAwesomeIcon icon="backward" /> Back to Project Board
             </Button>
           </Link>
-          <br />
-          <hr />
-          <h4 className="display-4 text-center">Update Project Task</h4>
-          <p className="lead text-center">
+        </Row>
+        <Row className="justify-content-md-center">
+          <h4 className="display-4">Update Project Task</h4>
+        </Row>
+        <Row className="justify-content-md-center">
+          <p className="lead">
             Project Name: {this.state.projectIdentifier} | Project Task ID:{" "}
             {this.state.projectSequence}{" "}
           </p>
-          <Form onSubmit={this.onSubmit} className="d-flex-fill p-1 text-left">
-            <Form.Label>Project Task Summary</Form.Label>
-            <Form.Group>
-              <Form.Control
-                as="input"
-                name="summary"
-                className={classnames({
-                  "is-invalid": errors.summary,
-                })}
-                placeholder="Project Task summary"
-                value={this.state.summary}
-                onChange={this.onChange}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.summary}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Acceptance Criteria</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="acceptanceCriteria"
-                placeholder="Acceptance Criteria"
-                value={this.state.acceptanceCriteria}
-                onChange={this.onChange}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Due Date</Form.Label>
-              <Form.Control
-                type="date"
-                name="dueDate"
-                value={this.state.dueDate}
-                onChange={this.onChange}
-              />
-            </Form.Group>
+        </Row>
 
-            <Form.Group>
-              <Form.Label>Priority</Form.Label>
-              <Form.Control
-                as="select"
-                custom
-                name="priority"
-                required
-                value={this.state.priority}
-                onChange={this.onChange}
-              >
-                <option value={0}>Select Priority</option>
-                <option value={1}>High</option>
-                <option value={2}>Medium</option>
-                <option value={3}>Low</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Status</Form.Label>
-              <Form.Control
-                as="select"
-                custom
-                name="status"
-                value={this.state.status}
-                onChange={this.onChange}
-              >
-                <option value="">Select Status</option>
-                <option value="TO_DO">TO DO</option>
-                <option value="IN_PROGRESS">IN PROGRESS</option>
-                <option value="DONE">DONE</option>
-              </Form.Control>
-            </Form.Group>
+        <Row className="justify-content-md-center">
+          <Col lg={6}>
+            <Form
+              onSubmit={this.onSubmit}
+              className="d-flex-fill p-1 text-left"
+            >
+              <Form.Label>Project Task Summary</Form.Label>
+              <Form.Group>
+                <Form.Control
+                  as="input"
+                  name="summary"
+                  className={classnames({
+                    "is-invalid": errors.summary,
+                  })}
+                  placeholder="Project Task summary"
+                  value={this.state.summary}
+                  onChange={this.onChange}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.summary}
+                </Form.Control.Feedback>
+              </Form.Group>
 
-            <Button type="submit" block>
-              Submit
-            </Button>
-          </Form>
-        </div>
+              <Form.Group>
+                <Form.Label>Acceptance Criteria</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  name="acceptanceCriteria"
+                  placeholder="Acceptance Criteria"
+                  value={this.state.acceptanceCriteria}
+                  onChange={this.onChange}
+                />
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Due Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="dueDate"
+                  value={this.state.dueDate}
+                  onChange={this.onChange}
+                />
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Priority</Form.Label>
+                <Form.Control
+                  as="select"
+                  custom
+                  name="priority"
+                  required
+                  value={this.state.priority}
+                  onChange={this.onChange}
+                >
+                  <option value={0}>Select Priority</option>
+                  <option value={1}>High</option>
+                  <option value={2}>Medium</option>
+                  <option value={3}>Low</option>
+                </Form.Control>
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Status</Form.Label>
+                <Form.Control
+                  as="select"
+                  custom
+                  name="status"
+                  value={this.state.status}
+                  onChange={this.onChange}
+                >
+                  <option value="">Select Status</option>
+                  <option value="TO_DO">TO DO</option>
+                  <option value="IN_PROGRESS">IN PROGRESS</option>
+                  <option value="DONE">DONE</option>
+                </Form.Control>
+              </Form.Group>
+
+              <Button type="submit" block>
+                Submit
+              </Button>
+            </Form>
+          </Col>
+        </Row>
       </Container>
     );
   }
