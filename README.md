@@ -1,3 +1,5 @@
+[See the App live](https://codesandbox.io/s/nervous-sunset-ggw3b)
+
 ![ui-screenshots](src/assets/ui-screenshots/currentUI.png)
 
 - $ npm i --save @fortawesome/fontawesome-svg-core  @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
